@@ -4,7 +4,7 @@
 
 #map {
   width: 500px;
-  height: 700px;
+  height: 500px;
 }
 
 #map div{
@@ -18,3 +18,10 @@
 #map div.neutral { background-color: chartreuse; }
 #map div.kill { background-color: red; }
 #map div.save { background-color: blue; }
+
+.test {
+  display: block;
+  background-color: orange;
+  height: 100px;
+  width: 100px;
+}

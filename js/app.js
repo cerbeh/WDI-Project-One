@@ -3,12 +3,16 @@ function characterGenerator() {
 }
 
 const objectValues = {
-  characterValue: characterGenerator(),
+  characterValue: 0,
   playerCharater: 1,
   action: 1
 };
 const characterGrid = Array(10).fill(Array(10).fill(objectValues));
-//You will need two grids. One is for the characters and the other for the user. and then there'll be a function comparing
+
+function populateFirstRow(array) {
+  array[0][0].characterValue = characterGenerator();
+}
+
 //more arrays and then indexes to show what the character is in it and then the other for where the user is.
 //or objects
 //local storage for scoreboard if character position = bottom row (array length -1)
@@ -26,6 +30,14 @@ const characterGrid = Array(10).fill(Array(10).fill(objectValues));
 //something along the lines of objectName.function() and the function will generate the random number.
 
 $(()=>{
+
+  const $testbutton = $('#test');
+  console.log($testbutton);
+
+  $testbutton.on('click', function() {
+    populateFirstRow(characterGrid);
+    console.log('click');
+  });
 
   $('#map').on('mouseover', 'div', function(){
     $('#cell-address').val(`${$(this).data('x')}-${$(this).data('y')}`);

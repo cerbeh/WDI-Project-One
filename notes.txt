@@ -1,3 +1,4 @@
 -randomly populate a grid with objects
+  only the first line wants to be populated with with colours. the other rows need to start off vacant.
 function for action logic.
   if correct action give points, if wrong action take away points.
