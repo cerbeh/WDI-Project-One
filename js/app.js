@@ -1,49 +1,49 @@
 function characterGenerator() {
-  return +[Math.floor(Math.random()*4)];
+  return +[Math.floor(Math.random()*6)];
 }
 
 const objectValues = {
   characterValue: 0,
-  playerCharater: 1,
-  action: 1
+  playerCharacter: true,
+  action: 2
 };
 const characterGrid = Array(10).fill(Array(10).fill(objectValues));
 
 function populateFirstRow(array) {
-  const $element = $('<div />');
-  array[0][0].characterValue = characterGenerator();
-  switch (array[0][0].characterValue) {
-    case 0:
-      $element.attr('class', 'blank');
-      break;
-    case 1:
-      $element.attr('class', 'neutral');
-      break;
-    case 2:
-      $element.attr('class', 'kill');
-      break;
-    case 3:
-      $element.attr('class', 'save');
-      break;
-  }
-  $element.appendTo('#map');
+
+  const $rowElements = $("div[rowNumber*='0']");
+
+  //changing the character value of the object.
+  array[0].forEach(function(element) {
+    element.characterValue = characterGenerator();
+    console.log(element.characterValue);
+  });
+
+  console.log($rowElements);
+
+
+  $rowElements.each(function(element) {
+    //console.log(element.characterValue);
+    switch (element.characterValue) {
+      case 0:
+      case 1:
+      case 2:
+        $rowElements.attr('class', 'blank');
+        break;
+      case 3:
+        $rowElements.attr('class', 'neutral');
+        break;
+      case 4:
+        $rowElements.attr('class', 'kill');
+        break;
+      case 5:
+        $rowElements.attr('class', 'save');
+        break;
+    }
+    //$rowElements.appendTo('#map');
+  });
+
 }
-
-//more arrays and then indexes to show what the character is in it and then the other for where the user is.
-//or objects
-//local storage for scoreboard if character position = bottom row (array length -1)
-
-//as they fall they will be taking the value of the index above them
-
-
-
-
-
-//need to randomly generate an array, and populate it with objects that have two values.
-
-//every element of the character array wants to have an something in it that will somehow be what is returning the random numbers.
-
-//something along the lines of objectName.function() and the function will generate the random number.
 
 $(()=>{
 
@@ -51,11 +51,10 @@ $(()=>{
 
   $testbutton.on('click', function() {
     populateFirstRow(characterGrid);
-    console.log('click');
   });
 
   $('#map').on('mouseover', 'div', function(){
-    $('#cell-address').val(`${$(this).data('x')}-${$(this).data('y')}`);
+    $('#cell-address').val(`${ $(this).data('x') }-${ $(this).data('y') }`);
   });
 
   //sets the css of each square in the grid depending on value entered in array
@@ -76,8 +75,9 @@ $(()=>{
           $element.addClass('save');
           break;
       }
-
       $element.data({x: i, y: j});
+      $element.attr('rowNumber', i);
+      $element.attr('columnNumber', j);
 
       $element.appendTo('#map');
     });

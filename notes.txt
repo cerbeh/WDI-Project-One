@@ -2,3 +2,20 @@
   only the first line wants to be populated with with colours. the other rows need to start off vacant.
 function for action logic.
   if correct action give points, if wrong action take away points.
+
+
+  //more arrays and then indexes to show what the character is in it and then the other for where the user is.
+  //or objects
+  //local storage for scoreboard if character position = bottom row (array length -1)
+
+  //as they fall they will be taking the value of the index above them
+
+
+
+
+
+  //need to randomly generate an array, and populate it with objects that have two values.
+
+  //every element of the character array wants to have an something in it that will somehow be what is returning the random numbers.
+
+  //something along the lines of objectName.function() and the function will generate the random number.
