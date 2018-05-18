@@ -19,3 +19,13 @@ function for action logic.
   //every element of the character array wants to have an something in it that will somehow be what is returning the random numbers.
 
   //something along the lines of objectName.function() and the function will generate the random number.
+
+you've now got a list of randomly generated numbers, and now that
+
+what are you feeding through the second each?
+
+The character value isnt being stored inside the objectValues
+when you're running the forEach its not storing it anywhere
+
+
+you want to go through each element and then change the character value.
