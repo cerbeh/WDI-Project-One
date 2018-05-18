@@ -14,7 +14,13 @@
 #map div.blank {
   background-color: papayawhip; }
 
-#map div.path {
+#map div.neutral {
   background-color: chartreuse; }
+
+#map div.kill {
+  background-color: red; }
+
+#map div.save {
+  background-color: blue; }
 
 /*# sourceMappingURL=style.css.map */

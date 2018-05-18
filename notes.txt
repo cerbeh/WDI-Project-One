@@ -1,0 +1,3 @@
+-randomly populate a grid with objects
+function for action logic.
+  if correct action give points, if wrong action take away points.
