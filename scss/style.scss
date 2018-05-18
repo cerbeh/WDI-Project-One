@@ -12,6 +12,7 @@
   width: 50px;
   height: 50px;
   float: left;
+  display: inline;
 }
 
 #map div.blank { background-color: papayawhip; }
@@ -20,7 +21,7 @@
 #map div.save { background-color: blue; }
 
 .test {
-  display: block;
+  display: inline;
   background-color: orange;
   height: 100px;
   width: 100px;

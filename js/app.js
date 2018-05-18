@@ -10,7 +10,23 @@ const objectValues = {
 const characterGrid = Array(10).fill(Array(10).fill(objectValues));
 
 function populateFirstRow(array) {
+  const $element = $('<div />');
   array[0][0].characterValue = characterGenerator();
+  switch (array[0][0].characterValue) {
+    case 0:
+      $element.attr('class', 'blank');
+      break;
+    case 1:
+      $element.attr('class', 'neutral');
+      break;
+    case 2:
+      $element.attr('class', 'kill');
+      break;
+    case 3:
+      $element.attr('class', 'save');
+      break;
+  }
+  $element.appendTo('#map');
 }
 
 //more arrays and then indexes to show what the character is in it and then the other for where the user is.
@@ -32,7 +48,6 @@ function populateFirstRow(array) {
 $(()=>{
 
   const $testbutton = $('#test');
-  console.log($testbutton);
 
   $testbutton.on('click', function() {
     populateFirstRow(characterGrid);
@@ -47,8 +62,6 @@ $(()=>{
   $.each(characterGrid, (i, row) => {
     $.each(row, (j, cell) => {
       const $element = $('<div />');
-      //This will turn in to a switch for what shows on the grid. possible outcomes will be 4.
-      //Blank, Neutral, Kill, Save
       switch (cell.characterValue) {
         case 0:
           $element.addClass('blank');
@@ -66,9 +79,6 @@ $(()=>{
 
       $element.data({x: i, y: j});
 
-      $element.on('click', function() {
-        console.log($(this).data());
-      });
       $element.appendTo('#map');
     });
   });
