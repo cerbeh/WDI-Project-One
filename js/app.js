@@ -1,6 +1,6 @@
 function generateObject() {
   return {
-    characterValue: Math.round(Math.random()*5),
+    characterValue: 0,
     playerCharacter: true,
     action: 2
   };
@@ -16,50 +16,47 @@ const characterGrid = Array(10).fill(null).map(() => {
 function reAssignColours(array) {
   const $rowElements = $('div[rowNumber*=0]');
   console.log($rowElements);
-  console.log(array);
-  $rowElements.each(function(element) {
-    switch (array[element].characterValue) {
+  //console.log(array);
+  $rowElements.each(function(index, element) {
+    console.log(element, 'element');
+    // console.log(index, 'index');
+    //Right now this is assigning the colour to all of them because the const in the switch is
+    //$rowElements. This needs to be the individual elements themselves however I'm not sure how.
+    switch (array[index].characterValue) {
       case 0:
-        $rowElements.attr('class', 'blank');
+        $rowElements.eq(index).attr('class', 'blank');
+        //console.log('blank class used');
         break;
       case 1:
-        $rowElements.attr('class', 'neutral');
+        $rowElements.eq(index).attr('class', 'neutral');
+        //console.log('neutral class used');
         break;
       case 2:
-        $rowElements.attr('class', 'kill');
+        $rowElements.eq(index).attr('class', 'kill');
+        //console.log('kill class used');
         break;
       case 3:
-        $rowElements.attr('class', 'save');
+        $rowElements.eq(index).attr('class', 'save');
+        //console.log('save class used');
         break;
       // case 4:
       //   break;
       // case 5:
       //   break;
     }
+    console.log($rowElements);
   });
 }
 
 
 function populateFirstRow(array) {
   array.forEach(function(element){
-    console.log(element.characterValue, 'before');
+    //console.log(element.characterValue, 'before');
     element.characterValue = Math.round(Math.random()*3);
-    console.log(element.characterValue, 'after');
+    //console.log(element.characterValue, 'after');
   });
   reAssignColours(array);
 }
-
-
-// function populateFirstRow(array) {
-//   return array.map()
-//
-//   array.forEach(function(i){
-//     const object = generateObject();
-//     console.log(object.characterValue);
-//     reassignValue(index, object);
-//   });
-// };
-
 
 $(()=>{
 
@@ -81,19 +78,19 @@ $(()=>{
       const $element = $('<div />');
       switch (cell.characterValue) {
         case 0:
-        case 1:
-        case 2:
           $element.attr('class', 'blank');
           break;
-        case 3:
+        case 1:
           $element.attr('class', 'neutral');
           break;
-        case 4:
+        case 2:
           $element.attr('class', 'kill');
           break;
-        case 5:
+        case 3:
           $element.attr('class', 'save');
           break;
+        //case 4:
+        //case 5:
       }
       $element.data({x: i, y: j});
       $element.attr('rowNumber', i);
