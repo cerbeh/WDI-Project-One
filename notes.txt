@@ -29,3 +29,14 @@ when you're running the forEach its not storing it anywhere
 
 
 you want to go through each element and then change the character value.
+
+
+
+
+
+Notes Saturday 19th.
+Completed work on generating new object values for the top row and then reassigning the colours on the rowOneDivs
+
+-Need to work on doing this on a more universal level rather then currently that has a function defining
+a very specific row of divs. somehow thinking about translating this to chose the row of divs based on information
+fed to the function in the first place.

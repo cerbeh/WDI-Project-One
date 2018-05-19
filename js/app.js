@@ -14,9 +14,10 @@ function generateObject() {
 
 //This function will grab the elements on the top row and reassign them based on the characterValue
 //at the index of the array they correspond to.
-function reAssignColours(array) {
+function reAssignColours(array, row) {
   const $rowElements = $('div[rowNumber*=0]');
-  //console.log($rowElements);
+  //const $rowElements = $('div[rowNumber*=0]');
+  console.log($rowElements);
   $rowElements.each(function(index) {
     //console.log(element, 'element');
     switch (array[index].characterValue) {
@@ -54,12 +55,17 @@ function populateFirstRow(array) {
 }
 
 function copyRowAbove() {
+  //This function wants to some how be a universal trick
   const $rowZeroElements = $('div[rowNumber*=0]');
   const $rowOneElements = $('div[rowNumber*=1]');
   console.log($rowZeroElements);
   console.log($rowOneElements);
+  //$rowOneElements.replaceWith($rowZeroElements);
+  console.log($rowZeroElements);
+  console.log($rowOneElements);
 }
 
+const $rowZeroDivs = $('div[rowNumber*=0]');
 
 $(()=>{
 
@@ -67,13 +73,27 @@ $(()=>{
   const $testbuttonTwo = $('#test2');
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
+  const $rowOneDivs = $('div[rowNumber*=1]');
+  const $rowTwoDivs = $('div[rowNumber*=2]');
+  const $rowThreeDivs = $('div[rowNumber*=3]');
+  const $rowFourDivs = $('div[rowNumber*=4]');
+  const $rowFiveDivs = $('div[rowNumber*=5]');
+  const $rowSixDivs = $('div[rowNumber*=6]');
+  const $rowSevenDivs = $('div[rowNumber*=7]');
+  const $rowEightDivs = $('div[rowNumber*=8]');
+  const $rowNineDivs = $('div[rowNumber*=9]');
+  console.log($rowZeroDivs,$rowOneDivs,);
+
+  //Can you create the equivalent array of characterGrid filled with the relevant divs.
+  //does this help with linking the two for colour changes.
+  //const $divGrid = Array.fill(10)
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid[0], characterGrid[1]);
   });
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid[0]);
+    populateFirstRow(characterGrid[0],0);
   });
 
   $map.on('mouseover', 'div', function(){
