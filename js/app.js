@@ -19,41 +19,57 @@ const objectValues = {
 //generates a 10x10 grid with objects stored inside it.
 const characterGrid = Array(10).fill(Array(10).fill(objectValues));
 
+//This function will grab the elements on the top row and reassign them based on the characterValue
+//at the index of the array they correspond to.
+function reAssignColours(array) {
+  const $rowElements = $("div[rowNumber*='0']");
+  console.log($rowElements);
+  $rowElements.each(function(element) {
+    switch (array[element].characterValue) {
+      case 0:
+      case 1:
+      case 2:
+        $rowElements.attr('class', 'blank');
+        break;
+      case 3:
+        $rowElements.attr('class', 'neutral');
+        break;
+      case 4:
+        $rowElements.attr('class', 'kill');
+        break;
+      case 5:
+        $rowElements.attr('class', 'save');
+        break;
+    }
+  });
+}
 
-    //console.log(element.characterValue);
+function reassignValue(index, object) {
+  index.characterValue = object.characterValue;
+}
 
-
-  //console.log($rowElements);
-
-  //
-  // const $rowElements = $("div[rowNumber*='0']");
-  // $rowElements.each(function(element) {
-  //   //console.log(element.characterValue);
-  //   switch (element.characterValue) {
-  //     case 0:
-  //     case 1:
-  //     case 2:
-  //       $rowElements.attr('class', 'blank');
-  //       break;
-  //     case 3:
-  //       $rowElements.attr('class', 'neutral');
-  //       break;
-  //     case 4:
-  //       $rowElements.attr('class', 'kill');
-  //       break;
-  //     case 5:
-  //       $rowElements.attr('class', 'save');
-  //       break;
-  //   }
-  //   //$rowElements.appendTo('#map');
-  // });
-
+//Currently this function is reassiging ALL object.characterValue in the grid to have the final value from the random number generator.
 function populateFirstRow(array) {
-  array[0].forEach(function(index){
+  array.forEach(function(index){
     const object = generateObjects();
     console.log(object.characterValue);
-    index.characterValue = object.characterValue;
+    reassignValue(index, object);
   });
+
+  /*
+  var someArray = [  whatever  ];
+// ...
+someArray.forEach(function(arrayElement) {
+  // ... code code code for this one element
+  someAsynchronousFunction(arrayElement, function() {
+    arrayElement.doSomething();
+  });
+});
+*/
+
+
+
+  reAssignColours(array);
 }
 
 $(()=>{
@@ -61,7 +77,7 @@ $(()=>{
   const $testbutton = $('#test');
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid);
+    populateFirstRow(characterGrid[0]);
   });
 
   $('#map').on('mouseover', 'div', function(){
