@@ -1,3 +1,9 @@
+//generates a 10x10 grid with objects stored inside it.
+const characterGrid = Array(10).fill(null).map(() => {
+  return Array(10).fill(null).map(generateObject);
+});
+//Used to generate the initial objects that occupy the grid,
+//ensuring they're all unique
 function generateObject() {
   return {
     characterValue: 0,
@@ -6,49 +12,38 @@ function generateObject() {
   };
 }
 
-//generates a 10x10 grid with objects stored inside it.
-const characterGrid = Array(10).fill(null).map(() => {
-  return Array(10).fill(null).map(generateObject);
-});
-
 //This function will grab the elements on the top row and reassign them based on the characterValue
 //at the index of the array they correspond to.
 function reAssignColours(array) {
   const $rowElements = $('div[rowNumber*=0]');
-  console.log($rowElements);
-  //console.log(array);
-  $rowElements.each(function(index, element) {
-    console.log(element, 'element');
-    // console.log(index, 'index');
-    //Right now this is assigning the colour to all of them because the const in the switch is
-    //$rowElements. This needs to be the individual elements themselves however I'm not sure how.
+  //console.log($rowElements);
+  $rowElements.each(function(index) {
+    //console.log(element, 'element');
     switch (array[index].characterValue) {
       case 0:
         $rowElements.eq(index).attr('class', 'blank');
-        //console.log('blank class used');
         break;
       case 1:
         $rowElements.eq(index).attr('class', 'neutral');
-        //console.log('neutral class used');
         break;
       case 2:
         $rowElements.eq(index).attr('class', 'kill');
-        //console.log('kill class used');
         break;
       case 3:
         $rowElements.eq(index).attr('class', 'save');
-        //console.log('save class used');
         break;
+      /*When game is built more, extra cases will be used
+      to increase the odds on certain colours being used
+      rather then current 25% for each*/
       // case 4:
       //   break;
       // case 5:
       //   break;
     }
-    console.log($rowElements);
   });
 }
-
-
+//Assigns random values to the objects in the first row of the grid
+//and then calls on reAssignColours to change their colours.
 function populateFirstRow(array) {
   array.forEach(function(element){
     //console.log(element.characterValue, 'before');
@@ -58,11 +53,24 @@ function populateFirstRow(array) {
   reAssignColours(array);
 }
 
+function copyRowAbove() {
+  const $rowZeroElements = $('div[rowNumber*=0]');
+  const $rowOneElements = $('div[rowNumber*=1]');
+  console.log($rowZeroElements);
+  console.log($rowOneElements);
+}
+
+
 $(()=>{
 
   const $testbutton = $('#test');
+  const $testbuttonTwo = $('#test2');
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
+
+  $testbuttonTwo.on('click', function() {
+    copyRowAbove(characterGrid[0], characterGrid[1]);
+  });
 
   $testbutton.on('click', function() {
     populateFirstRow(characterGrid[0]);
