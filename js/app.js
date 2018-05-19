@@ -20,13 +20,8 @@ const objectValues = {
 const characterGrid = Array(10).fill(Array(10).fill(objectValues));
 
 
-
-
-    //There should be a this somewhere so that the number is only being assigned to the object you're in.
-    //You're generating 10random numbers fine but you're only storing the last one.
-
     //console.log(element.characterValue);
-}
+
 
   //console.log($rowElements);
 
@@ -53,18 +48,13 @@ const characterGrid = Array(10).fill(Array(10).fill(objectValues));
   //   //$rowElements.appendTo('#map');
   // });
 
-  function populateFirstRow(array) {
-
-
-    //changing the character value of the object. But i'm only generating one random number.
-    //array[0].forEach(function(element) { """"
-
-    for (let i = 0; i < array[0].length; i++){
-      const object = generateObjects();
-      console.log(object.characterValue);
-      array[0][i].characterValue = object.characterValue;
-    }
-
+function populateFirstRow(array) {
+  array[0].forEach(function(index){
+    const object = generateObjects();
+    console.log(object.characterValue);
+    index.characterValue = object.characterValue;
+  });
+}
 
 $(()=>{
 
