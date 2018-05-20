@@ -6,19 +6,31 @@ const characterGrid = Array(10).fill(null).map(() => {
 //ensuring they're all unique
 function generateObject() {
   return {
-    characterValue: 0,
+    characterValue: Math.round(Math.random()*3),
     playerCharacter: true,
-    action: 2
+    action: 2,
+    cellID: Math.round(Math.random()*100)
   };
 }
 
 //This function will grab the elements on the top row and reassign them based on the characterValue
 //at the index of the array they correspond to.
+/* we are currently asking it to specify a row number, but what if we grabbed the entire amount
+of them and some how linke them with the entire array so that every time this function is run it
+will grab the object data and then convert the div data based on that. */
+
 function reAssignColours(array) {
-  const $rowElements = $('div[rowNumber*=0]');
-  //console.log($rowElements);
+  // const $rowElements = $('div[rowNumber*=' + 0 + ']');
+  // console.log($rowElements);
+  const $rowElements = $('div[rowNumber*=' + array.length + ']');
+  //for (let i = 0; i < array.length; i++) {
+  //So now just before bed you've worked out that this kind of string interpolation works whereas the back ticks didnt.
+  //Now you somehow have to work out what that even means!
+  console.log($rowElements);
+  //}
   //const $rowElements = $(`div[rowNumber*=${array[index].rowNumber}]`);
   $rowElements.each(function(index) {
+    console.log($rowElements);
     //console.log(element, 'element');
     switch (array[index].characterValue) {
       case 0:
@@ -48,7 +60,6 @@ function reAssignColours(array) {
 //Assigns random values to the objects in the first row of the grid
 //and then calls on reAssignColours to change their colours.
 function populateFirstRow(array) {
-  console.log(array);
   array.forEach(function(element){
     element.characterValue = Math.round(Math.random()*3);
   });
@@ -65,12 +76,11 @@ In order to move them down we pop the last row, unshift in a new row and then po
 
 //function is currently copying all the information stored in row one down all the arrays.
 function copyRowAbove(array) {
-  console.log(array);
   array.pop();
-  console.log(array);
   array.unshift(Array(10).fill(null).map(generateObject));
-  console.log(array);
+  //console.log(array);
   populateFirstRow(array);
+  //console.log(array);
   // array.forEach(function(element, index) {
   //   //console.log(element, 'element');
   //   //console.log(index, array[index], 'array index');
@@ -79,8 +89,6 @@ function copyRowAbove(array) {
   //   }
   //});
 }
-
-const $rowZeroDivs = $('div[rowNumber*=0]');
 
 $(()=>{
 
