@@ -14,10 +14,9 @@ function generateObject() {
 
 //This function will grab the elements on the top row and reassign them based on the characterValue
 //at the index of the array they correspond to.
-function reAssignColours(array, row) {
+function reAssignColours(array) {
   const $rowElements = $('div[rowNumber*=0]');
-  //const $rowElements = $('div[rowNumber*=0]');
-  console.log($rowElements);
+  //const $rowElements = $(`div[rowNumber*=${array[index].rowNumber}]`);
   $rowElements.each(function(index) {
     //console.log(element, 'element');
     switch (array[index].characterValue) {
@@ -47,22 +46,36 @@ function reAssignColours(array, row) {
 //and then calls on reAssignColours to change their colours.
 function populateFirstRow(array) {
   array.forEach(function(element){
-    //console.log(element.characterValue, 'before');
     element.characterValue = Math.round(Math.random()*3);
-    //console.log(element.characterValue, 'after');
   });
   reAssignColours(array);
 }
 
-function copyRowAbove() {
+
+
+function copyRowAbove(array) {
+  array.forEach(function(element, index) {
+    //console.log(element, 'element');
+    //console.log(index, array[index], 'array index');
+    if (index > 0) {
+      array[index] = array[index-1].slice();
+    }
+
+  });
+
+
   //This function wants to some how be a universal trick
   const $rowZeroElements = $('div[rowNumber*=0]');
-  const $rowOneElements = $('div[rowNumber*=1]');
-  console.log($rowZeroElements);
-  console.log($rowOneElements);
-  //$rowOneElements.replaceWith($rowZeroElements);
-  console.log($rowZeroElements);
-  console.log($rowOneElements);
+  let $rowOneElements = $('div[rowNumber*=1]');
+  console.log($rowZeroElements, 'before');
+  console.log($rowOneElements, 'before');
+  //This one worked. Now just have to work out the colour reassigning.
+  $rowOneElements = $rowZeroElements.clone();
+  //$('div[rowNumber*=1]') = $rowZeroElements.clone();
+  console.log($rowZeroElements, 'after');
+  console.log($rowOneElements, 'after');
+
+  $('div[rowNumber*=0]').replaceAll('div[rowNumber*=1]');
 }
 
 const $rowZeroDivs = $('div[rowNumber*=0]');
@@ -73,27 +86,16 @@ $(()=>{
   const $testbuttonTwo = $('#test2');
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
-  const $rowOneDivs = $('div[rowNumber*=1]');
-  const $rowTwoDivs = $('div[rowNumber*=2]');
-  const $rowThreeDivs = $('div[rowNumber*=3]');
-  const $rowFourDivs = $('div[rowNumber*=4]');
-  const $rowFiveDivs = $('div[rowNumber*=5]');
-  const $rowSixDivs = $('div[rowNumber*=6]');
-  const $rowSevenDivs = $('div[rowNumber*=7]');
-  const $rowEightDivs = $('div[rowNumber*=8]');
-  const $rowNineDivs = $('div[rowNumber*=9]');
-  console.log($rowZeroDivs,$rowOneDivs,);
 
   //Can you create the equivalent array of characterGrid filled with the relevant divs.
   //does this help with linking the two for colour changes.
-  //const $divGrid = Array.fill(10)
 
   $testbuttonTwo.on('click', function() {
-    copyRowAbove(characterGrid[0], characterGrid[1]);
+    copyRowAbove(characterGrid);
   });
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid[0],0);
+    populateFirstRow(characterGrid[0]);
   });
 
   $map.on('mouseover', 'div', function(){
@@ -104,6 +106,7 @@ $(()=>{
   $.each(characterGrid, (i, row) => {
     $.each(row, (j, cell) => {
       const $element = $('<div />');
+      characterGrid[i][j].rowNumber = i;
       switch (cell.characterValue) {
         case 0:
           $element.attr('class', 'blank');
