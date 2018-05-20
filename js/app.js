@@ -16,6 +16,7 @@ function generateObject() {
 //at the index of the array they correspond to.
 function reAssignColours(array) {
   const $rowElements = $('div[rowNumber*=0]');
+  //console.log($rowElements);
   //const $rowElements = $(`div[rowNumber*=${array[index].rowNumber}]`);
   $rowElements.each(function(index) {
     //console.log(element, 'element');
@@ -42,9 +43,12 @@ function reAssignColours(array) {
     }
   });
 }
+
+
 //Assigns random values to the objects in the first row of the grid
 //and then calls on reAssignColours to change their colours.
 function populateFirstRow(array) {
+  console.log(array);
   array.forEach(function(element){
     element.characterValue = Math.round(Math.random()*3);
   });
@@ -53,29 +57,24 @@ function populateFirstRow(array) {
 
 
 
+/* Rather then replacing the elements why arent we just popping the array at the end of the
+array and then shifting in the new one with all the new properties.
+
+In order to move them down we pop the last row, unshift in a new row and then populate first row.
+*/
+
+//function is currently copying all the information stored in row one down all the arrays.
 function copyRowAbove(array) {
-  array.forEach(function(element, index) {
-    //console.log(element, 'element');
-    //console.log(index, array[index], 'array index');
-    if (index > 0) {
-      array[index] = array[index-1].slice();
-    }
-
-  });
-
-
-  //This function wants to some how be a universal trick
-  const $rowZeroElements = $('div[rowNumber*=0]');
-  let $rowOneElements = $('div[rowNumber*=1]');
-  console.log($rowZeroElements, 'before');
-  console.log($rowOneElements, 'before');
-  //This one worked. Now just have to work out the colour reassigning.
-  $rowOneElements = $rowZeroElements.clone();
-  //$('div[rowNumber*=1]') = $rowZeroElements.clone();
-  console.log($rowZeroElements, 'after');
-  console.log($rowOneElements, 'after');
-
-  $('div[rowNumber*=0]').replaceAll('div[rowNumber*=1]');
+  array.pop();
+  array.unshift(Array(10).fill(null).map(generateObject));
+  reAssignColours(array);
+  // array.forEach(function(element, index) {
+  //   //console.log(element, 'element');
+  //   //console.log(index, array[index], 'array index');
+  //   if (index > 0) {
+  //     array[index] = array[index-1].slice();
+  //   }
+  //});
 }
 
 const $rowZeroDivs = $('div[rowNumber*=0]');
@@ -87,15 +86,15 @@ $(()=>{
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
 
-  //Can you create the equivalent array of characterGrid filled with the relevant divs.
-  //does this help with linking the two for colour changes.
+  /*Can you create the equivalent array of characterGrid filled with the relevant divs.
+  does this help with linking the two for colour changes.*/
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
   });
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid[0]);
+    populateFirstRow(characterGrid[0],);
   });
 
   $map.on('mouseover', 'div', function(){
