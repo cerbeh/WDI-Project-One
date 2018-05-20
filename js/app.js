@@ -65,9 +65,12 @@ In order to move them down we pop the last row, unshift in a new row and then po
 
 //function is currently copying all the information stored in row one down all the arrays.
 function copyRowAbove(array) {
+  console.log(array);
   array.pop();
+  console.log(array);
   array.unshift(Array(10).fill(null).map(generateObject));
-  reAssignColours(array);
+  console.log(array);
+  populateFirstRow(array);
   // array.forEach(function(element, index) {
   //   //console.log(element, 'element');
   //   //console.log(index, array[index], 'array index');
