@@ -21,4 +21,13 @@
     height: 100px;
     width: 100px;
   }
+  .score-board {
+    height: 60px;
+    width: 60px;
+    background-color: yellow;
+    border: 3px solid saddlebrown;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

@@ -66,7 +66,6 @@ $(()=>{
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
-    reAssignColours();
   });
 
   //Button now obselete due to function it passes being used on button two.
@@ -77,6 +76,16 @@ $(()=>{
   $map.on('mouseover', 'div', function(){
     $cellAddress.val(`${ $(this).data('x') }-${ $(this).data('y') }`);
   });
+
+  $map.on('click', 'div', function(){
+    console.log($(this).attr('class'));
+
+
+    // if ($('this').hasClass('save')) {
+    //   console.log('SAVED!');
+    // }
+  });
+
 
   //sets the css of each square in the grid depending on value entered in array
   $.each(characterGrid, (i, row) => {
