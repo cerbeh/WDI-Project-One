@@ -13,7 +13,6 @@ function generateObject() {
     rowNumber: 0
   };
 }
-
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
 function reAssignColours(array) {
@@ -81,18 +80,28 @@ $(()=>{
 
   $map.on('click', 'div', function(){
     //Code for getting the div class that the score system is based on.
+    const x = $(this).data('x');
+    const y = $(this).data('y');
+
     console.log($(this).attr('class'));
     console.log('left click');
+    console.log($(this).data('x'));
+
+    characterGrid[x][y].characterValue = 0;
     if ($(this).attr('class') === 'save') {
       scoreValue = scoreValue + 5;
     } else {
       scoreValue = scoreValue - 5;
     }
     $score.text(scoreValue);
+    $(this).attr('class', 'blank');
   });
 
   $map.on('contextmenu', 'div', function(e) {
     e.preventDefault();
+    const x = $(this).data('x');
+    const y = $(this).data('y');
+    characterGrid[x][y].characterValue = 0;
     console.log($(this).attr('class'));
     console.log('right click!');
     if ($(this).attr('class') === 'kill') {
@@ -101,6 +110,7 @@ $(()=>{
       scoreValue = scoreValue - 5;
     }
     $score.text(scoreValue);
+    $(this).attr('class', 'blank');
   });
 
 
