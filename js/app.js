@@ -20,37 +20,51 @@ of them and some how linke them with the entire array so that every time this fu
 will grab the object data and then convert the div data based on that. */
 
 function reAssignColours(array) {
-  //const $rowElements = $('div[rowNumber*=' + 0 + ']');
-
-  for (let i = 0; i < array.length; i++) {
+  array.forEach(function(row, i) {
     const $rowElements = $('div[rowNumber*=' + i + ']');
-    console.log($rowElements);
-    $rowElements.each(function(index) {
-      //console.log($rowElements);
-      //console.log(element, 'element');
-      switch (array[index].characterValue) {
-        case 0:
-          $rowElements.eq(index).attr('class', 'blank');
-          break;
-        case 1:
-          $rowElements.eq(index).attr('class', 'neutral');
-          break;
-        case 2:
-          $rowElements.eq(index).attr('class', 'kill');
-          break;
-        case 3:
-          $rowElements.eq(index).attr('class', 'save');
-          break;
-      }
+    console.log($rowElements, i);
+    row.forEach(function(cell, j) {
+      //console.log(cell, j);
+      //console.log(cell.characterValue);
+      // switch (element.characterValue) {
+      //   case 0:
+      //     $rowElements.eq(i).attr('class', 'blank');
+      //     break;
+      //   case 1:
+      //     $rowElements.eq(i).attr('class', 'neutral');
+      //     break;
+      //   case 2:
+      //     $rowElements.eq(i).attr('class', 'kill');
+      //     break;
+      //   case 3:
+      //     $rowElements.eq(i).attr('class', 'save');
+      //     break;
+      // }
     });
-  }
+    //console.log(row);
+    //console.log(index);
+  });
+  // for (let i = 0; i < array.length; i++) {
+  //   const $rowElements = $('div[rowNumber*=' + i + ']');
+  //   //console.log($rowElements);
+  //   // console.log(array[i],i);
+  //   // console.log($rowElements);
+  //   $rowElements.each(function(index, element) {
+  //     console.log(element);
+  //     //console.log($rowElements);
+  //     //console.log(index);
+  //     //console.log(element, 'element');
+
+  //     //console.log($rowElements);
+  //   });
+  // }
 }
 
 
 //Assigns random values to the objects in the first row of the grid
 //and then calls on reAssignColours to change their colours.
 function populateFirstRow(array) {
-  array.forEach(function(element){
+  array[0].forEach(function(element){
     element.characterValue = Math.round(Math.random()*3);
   });
   reAssignColours(array);
@@ -67,8 +81,8 @@ function copyRowAbove(array) {
   array.pop();
   array.unshift(Array(10).fill(null).map(generateObject));
   //console.log(array);
-  console.log(characterGrid[0][0]);
-  console.log(characterGrid[1][0]);
+  //console.log(characterGrid[0][0]);
+  //console.log(characterGrid[1][0]);
   const number = Math.round(Math.random()*10);
   populateFirstRow(array, number);
 }
@@ -89,7 +103,7 @@ $(()=>{
   });
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid[0]);
+    populateFirstRow(characterGrid);
   });
 
   $map.on('mouseover', 'div', function(){
