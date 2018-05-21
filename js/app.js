@@ -81,15 +81,24 @@ $(()=>{
 
   $map.on('click', 'div', function(){
     //Code for getting the div class that the score system is based on.
-    //console.log($(this).attr('class'));
+    console.log($(this).attr('class'));
+    console.log('left click');
     if ($(this).attr('class') === 'save') {
       scoreValue = scoreValue + 5;
     } else {
       scoreValue = scoreValue - 5;
     }
     $score.text(scoreValue);
-    if ($('this').hasClass('save')) {
-      console.log('SAVED!');
+  });
+
+  $map.on('contextmenu', 'div', function(e) {
+    e.preventDefault();
+    console.log($(this).attr('class'));
+    console.log('right click!');
+    if ($(this).attr('class') === 'kill') {
+      scoreValue = scoreValue + 5;
+    } else {
+      scoreValue = scoreValue - 5;
     }
     $score.text(scoreValue);
   });

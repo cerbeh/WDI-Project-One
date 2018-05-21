@@ -2,7 +2,8 @@
   box-sizing: border-box; }
   * #map {
     width: 500px;
-    height: 500px; }
+    height: 500px;
+    display: inline-block; }
     * #map div {
       border: 1px solid saddlebrown;
       width: 50px;
