@@ -14,55 +14,29 @@ function generateObject() {
   };
 }
 
-//This function will grab the elements on the top row and reassign them based on the characterValue
-//at the index of the array they correspond to.
-/* we are currently asking it to specify a row number, but what if we grabbed the entire amount
-of them and some how linke them with the entire array so that every time this function is run it
-will grab the object data and then convert the div data based on that. */
-
+//This function feeds the grid data and the divs through and will
+//append the colour of each corresponding div on the new objects data
 function reAssignColours(array) {
-
   array.forEach(function(row, i) {
     const $rowElements = $('div[rowNumber*=' + i + ']');
-    //console.log($rowElements, i);
     $rowElements.attr('class', 'save');
-    row.forEach(function(cell) {
-      //console.log(cell); //** All one hundred objects **
-    });
-    $rowElements.each(function(index, element) {
-      //'element' is now logging every div element that is in the grid.
-      console.log(element); //** All one hundred divs ***
+    row.forEach(function(cell, index) {
+      switch (cell.characterValue) {
+        case 0:
+          $rowElements.eq(index).attr('class', 'blank');
+          break;
+        case 1:
+          $rowElements.eq(index).attr('class', 'neutral');
+          break;
+        case 2:
+          $rowElements.eq(index).attr('class', 'kill');
+          break;
+        case 3:
+          $rowElements.eq(index).attr('class', 'save');
+          break;
+      }
     });
   });
-
-  /*This can be looked at again later. For now we need to focus
-  just on finding the syntax for changing the div from inside
-  that array*/
-
-
-
-  // switch (objectArray[index].characterValue) {
-  //   case 0:
-  //     //$element.attr('class', 'blank');
-  //     $element.eq(index).attr('class', 'blank');
-  //     break;
-  //   case 1:
-  //     $element.eq(index).attr('class', 'neutral');
-  //     //elementArray[index].attr('class', 'neutral');
-  //     break;
-  //   case 2:
-  //     $element.eq(index).attr('class', 'kill');
-  //     //$rowElements.eq(i).attr('class', 'kill');
-  //     //elementArray[index].attr('class', 'kill');
-  //     break;
-  //   case 3:
-  //     $element.eq(index).attr('class', 'save');
-  //     //$rowElements.eq(i).attr('class', 'save');
-  //     //elementArray[index].attr('class', 'save');
-  //     break;
-  // }
-
-
 }
 
 
@@ -72,24 +46,15 @@ function populateFirstRow(array) {
   array[0].forEach(function(element){
     element.characterValue = Math.round(Math.random()*3);
   });
-  reAssignColours(array);
 }
 
-
-
-/* Rather then replacing the elements why arent we just popping the array at the end of the
-array and then shifting in the new one with all the new properties.
-
-In order to move them down we pop the last row, unshift in a new row and then populate first row. */
-
+//shifts all daya inside characterGrid up one index and inserts a new element in index 0.
+//then runs though the grid reassigning colours.
 function copyRowAbove(array) {
   array.pop();
   array.unshift(Array(10).fill(null).map(generateObject));
-  //console.log(array);
-  //console.log(characterGrid[0][0]);
-  //console.log(characterGrid[1][0]);
-  const number = Math.round(Math.random()*10);
-  populateFirstRow(array, number);
+  populateFirstRow(array);
+  reAssignColours(array);
 }
 
 $(()=>{
@@ -99,14 +64,12 @@ $(()=>{
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
 
-  /*Can you create the equivalent array of characterGrid filled with the relevant divs.
-  does this help with linking the two for colour changes.*/
-
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
     reAssignColours();
   });
 
+  //Button now obselete due to function it passes being used on button two.
   $testbutton.on('click', function() {
     populateFirstRow(characterGrid);
   });
