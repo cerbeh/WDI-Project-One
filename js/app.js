@@ -2,7 +2,7 @@
 const characterGrid = Array(10).fill(null).map(() => {
   return Array(10).fill(null).map(generateObject);
 });
-
+let scoreValue = 0;
 //Used to generate the initial objects that occupy the grid,
 //ensuring they're all unique
 function generateObject() {
@@ -63,6 +63,8 @@ $(()=>{
   const $testbuttonTwo = $('#test2');
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
+  const $score = $('.score');
+
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
@@ -78,12 +80,18 @@ $(()=>{
   });
 
   $map.on('click', 'div', function(){
-    console.log($(this).attr('class'));
-
-
-    // if ($('this').hasClass('save')) {
-    //   console.log('SAVED!');
-    // }
+    //Code for getting the div class that the score system is based on.
+    //console.log($(this).attr('class'));
+    if ($(this).attr('class') === 'save') {
+      scoreValue = scoreValue + 5;
+    } else {
+      scoreValue = scoreValue - 5;
+    }
+    $score.text(scoreValue);
+    if ($('this').hasClass('save')) {
+      console.log('SAVED!');
+    }
+    $score.text(scoreValue);
   });
 
 
