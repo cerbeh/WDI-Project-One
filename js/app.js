@@ -2,6 +2,7 @@
 const characterGrid = Array(10).fill(null).map(() => {
   return Array(10).fill(null).map(generateObject);
 });
+
 //Used to generate the initial objects that occupy the grid,
 //ensuring they're all unique
 function generateObject() {
@@ -20,44 +21,48 @@ of them and some how linke them with the entire array so that every time this fu
 will grab the object data and then convert the div data based on that. */
 
 function reAssignColours(array) {
+
   array.forEach(function(row, i) {
     const $rowElements = $('div[rowNumber*=' + i + ']');
-    console.log($rowElements, i);
-    row.forEach(function(cell, j) {
-      //console.log(cell, j);
-      //console.log(cell.characterValue);
-      // switch (element.characterValue) {
-      //   case 0:
-      //     $rowElements.eq(i).attr('class', 'blank');
-      //     break;
-      //   case 1:
-      //     $rowElements.eq(i).attr('class', 'neutral');
-      //     break;
-      //   case 2:
-      //     $rowElements.eq(i).attr('class', 'kill');
-      //     break;
-      //   case 3:
-      //     $rowElements.eq(i).attr('class', 'save');
-      //     break;
-      // }
+    //console.log($rowElements, i);
+    $rowElements.attr('class', 'save');
+    row.forEach(function(cell) {
+      //console.log(cell); //** All one hundred objects **
     });
-    //console.log(row);
-    //console.log(index);
+    $rowElements.each(function(index, element) {
+      //'element' is now logging every div element that is in the grid.
+      console.log(element); //** All one hundred divs ***
+    });
   });
-  // for (let i = 0; i < array.length; i++) {
-  //   const $rowElements = $('div[rowNumber*=' + i + ']');
-  //   //console.log($rowElements);
-  //   // console.log(array[i],i);
-  //   // console.log($rowElements);
-  //   $rowElements.each(function(index, element) {
-  //     console.log(element);
-  //     //console.log($rowElements);
-  //     //console.log(index);
-  //     //console.log(element, 'element');
 
-  //     //console.log($rowElements);
-  //   });
+  /*This can be looked at again later. For now we need to focus
+  just on finding the syntax for changing the div from inside
+  that array*/
+
+
+
+  // switch (objectArray[index].characterValue) {
+  //   case 0:
+  //     //$element.attr('class', 'blank');
+  //     $element.eq(index).attr('class', 'blank');
+  //     break;
+  //   case 1:
+  //     $element.eq(index).attr('class', 'neutral');
+  //     //elementArray[index].attr('class', 'neutral');
+  //     break;
+  //   case 2:
+  //     $element.eq(index).attr('class', 'kill');
+  //     //$rowElements.eq(i).attr('class', 'kill');
+  //     //elementArray[index].attr('class', 'kill');
+  //     break;
+  //   case 3:
+  //     $element.eq(index).attr('class', 'save');
+  //     //$rowElements.eq(i).attr('class', 'save');
+  //     //elementArray[index].attr('class', 'save');
+  //     break;
   // }
+
+
 }
 
 
