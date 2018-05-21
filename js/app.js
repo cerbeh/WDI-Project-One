@@ -6,10 +6,10 @@ const characterGrid = Array(10).fill(null).map(() => {
 //ensuring they're all unique
 function generateObject() {
   return {
-    characterValue: Math.round(Math.random()*3),
+    characterValue: 0,
     playerCharacter: true,
     action: 2,
-    cellID: Math.round(Math.random()*100)
+    rowNumber: 0
   };
 }
 
@@ -20,40 +20,30 @@ of them and some how linke them with the entire array so that every time this fu
 will grab the object data and then convert the div data based on that. */
 
 function reAssignColours(array) {
-  // const $rowElements = $('div[rowNumber*=' + 0 + ']');
-  // console.log($rowElements);
-  const $rowElements = $('div[rowNumber*=' + array.length + ']');
-  //for (let i = 0; i < array.length; i++) {
-  //So now just before bed you've worked out that this kind of string interpolation works whereas the back ticks didnt.
-  //Now you somehow have to work out what that even means!
-  console.log($rowElements);
-  //}
-  //const $rowElements = $(`div[rowNumber*=${array[index].rowNumber}]`);
-  $rowElements.each(function(index) {
+  //const $rowElements = $('div[rowNumber*=' + 0 + ']');
+
+  for (let i = 0; i < array.length; i++) {
+    const $rowElements = $('div[rowNumber*=' + i + ']');
     console.log($rowElements);
-    //console.log(element, 'element');
-    switch (array[index].characterValue) {
-      case 0:
-        $rowElements.eq(index).attr('class', 'blank');
-        break;
-      case 1:
-        $rowElements.eq(index).attr('class', 'neutral');
-        break;
-      case 2:
-        $rowElements.eq(index).attr('class', 'kill');
-        break;
-      case 3:
-        $rowElements.eq(index).attr('class', 'save');
-        break;
-      /*When game is built more, extra cases will be used
-      to increase the odds on certain colours being used
-      rather then current 25% for each*/
-      // case 4:
-      //   break;
-      // case 5:
-      //   break;
-    }
-  });
+    $rowElements.each(function(index) {
+      //console.log($rowElements);
+      //console.log(element, 'element');
+      switch (array[index].characterValue) {
+        case 0:
+          $rowElements.eq(index).attr('class', 'blank');
+          break;
+        case 1:
+          $rowElements.eq(index).attr('class', 'neutral');
+          break;
+        case 2:
+          $rowElements.eq(index).attr('class', 'kill');
+          break;
+        case 3:
+          $rowElements.eq(index).attr('class', 'save');
+          break;
+      }
+    });
+  }
 }
 
 
@@ -71,23 +61,16 @@ function populateFirstRow(array) {
 /* Rather then replacing the elements why arent we just popping the array at the end of the
 array and then shifting in the new one with all the new properties.
 
-In order to move them down we pop the last row, unshift in a new row and then populate first row.
-*/
+In order to move them down we pop the last row, unshift in a new row and then populate first row. */
 
-//function is currently copying all the information stored in row one down all the arrays.
 function copyRowAbove(array) {
   array.pop();
   array.unshift(Array(10).fill(null).map(generateObject));
   //console.log(array);
-  populateFirstRow(array);
-  //console.log(array);
-  // array.forEach(function(element, index) {
-  //   //console.log(element, 'element');
-  //   //console.log(index, array[index], 'array index');
-  //   if (index > 0) {
-  //     array[index] = array[index-1].slice();
-  //   }
-  //});
+  console.log(characterGrid[0][0]);
+  console.log(characterGrid[1][0]);
+  const number = Math.round(Math.random()*10);
+  populateFirstRow(array, number);
 }
 
 $(()=>{
@@ -102,10 +85,11 @@ $(()=>{
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
+    reAssignColours();
   });
 
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid[0],);
+    populateFirstRow(characterGrid[0]);
   });
 
   $map.on('mouseover', 'div', function(){
