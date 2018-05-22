@@ -8,6 +8,7 @@ let livesLeft = 5;
 let clockIntervalTiming ;
 let gameSpeedTiming;
 let timerLength = 0;
+let difficultySpeed = 1000;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
@@ -31,6 +32,13 @@ const pointsSystem = {
     blank: 0
   }
 };
+
+function gameOver() {
+  if (timerLength === 60 || livesLeft <= 0) {
+    clearInterval(clockIntervalTiming);
+    clearInterval(gameSpeedTiming);
+  }
+}
 
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
@@ -96,12 +104,18 @@ $(()=>{
   //   clockIntervalTiming = setInterval(startTimer,1000);
   //   if (timerLength === 0) clearInterval(clockintervalTiming);
   // }
+
+  function gameDifficulty() {
+    if (scoreValue === 200) difficultySpeed = difficultySpeed - 200;
+    copyRowAbove(characterGrid);
+    gameOver();
+  }
+
   //arguement to be passed through the setInterval function to begin clock
   function startTimer() {
     timerLength++;
     $clock.text(timerLength);
-    if (timerLength === 60) clearInterval(clockIntervalTiming);
-    if (livesLeft <= 0) clearInterval(clockIntervalTiming);
+    gameOver();
     //timerRunOut();
     //Event to happen when timer = 0. Clear screen or game over?
   }
@@ -127,6 +141,11 @@ $(()=>{
     $cellAddress.val(`${ $(this).data('x') }-${ $(this).data('y') }`);
   });
 
+  /*
+  ##########################
+  ##########BUTTONS#########
+  ##########################
+  */
 
   //Left Click
   $map.on('click', 'div', function(){
@@ -152,20 +171,16 @@ $(()=>{
     scoreUpdater(x, y, $squareClicked);
   });
 
-  /*
-  #############################
-  Test Buttons
-  #############################
-  */
-
+  //Test button one
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
   });
 
+  //Test button two
   $testbutton.on('click', function() {
     clockIntervalTiming = setInterval(startTimer,1000);
+    gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
   });
-
 
   //sets the css of each square in the grid depending on value entered in array
   $.each(characterGrid, (i, row) => {
