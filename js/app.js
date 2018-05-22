@@ -106,7 +106,34 @@ $(()=>{
   // }
 
   function gameDifficulty() {
-    if (scoreValue === 200) difficultySpeed = difficultySpeed - 200;
+    switch(scoreValue) {
+      case 150:
+        clearInterval(gameSpeedTiming);
+        difficultySpeed = difficultySpeed - 200;
+        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        break;
+      case 300:
+        clearInterval(gameSpeedTiming);
+        difficultySpeed = difficultySpeed - 200;
+        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        break;
+      case 500:
+        clearInterval(gameSpeedTiming);
+        difficultySpeed = difficultySpeed - 200;
+        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        break;
+      case 700:
+        clearInterval(gameSpeedTiming);
+        difficultySpeed = difficultySpeed - 200;
+        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        break;
+      case 1000:
+        clearInterval(gameSpeedTiming);
+        difficultySpeed = difficultySpeed - 200;
+        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        break;
+    }
+    console.log(difficultySpeed);
     copyRowAbove(characterGrid);
     gameOver();
   }
@@ -132,7 +159,6 @@ $(()=>{
   function scoreUpdater(x, y, squareClicked) {
     $score.text(scoreValue);
     characterGrid[x][y].characterValue = 0;
-    console.log(squareClicked);
     squareClicked.attr('class', 'blank');
   }
 
