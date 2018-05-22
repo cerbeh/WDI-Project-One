@@ -34,9 +34,9 @@ const pointsSystem = {
 
 const levelDifficulty = {
   //Interval timings for each level difficulty
-  levelOneSpeed: 3000,
-  levelTwoSpeed: 2750,
-  levelThreeSpeed: 2500,
+  levelOneSpeed: 2750,
+  levelTwoSpeed: 2500,
+  levelThreeSpeed: 2250,
   levelFourSpeed: 2000,
   levelFiveSpeed: 1500,
   levelSixSpeed: 1000,
@@ -45,17 +45,15 @@ const levelDifficulty = {
   //Passes scoreValue through this function to understand what level has been reached so that speed can be changed.
   score: function() {
     if (scoreValue < 150) return 'levelOne';
-    if (scoreValue >= 150 && scoreValue <300) return 'levelTwo';
-    if (scoreValue >= 300 && scoreValue < 500) return 'levelThree';
-    if (scoreValue >= 500 && scoreValue < 750) return 'levelFour';
+    if (scoreValue >= 125 && scoreValue <250) return 'levelTwo';
+    if (scoreValue >= 250 && scoreValue < 400) return 'levelThree';
+    if (scoreValue >= 400 && scoreValue < 750) return 'levelFour';
     if (scoreValue >= 750 && scoreValue < 1000) return 'levelFive';
     if (scoreValue >= 1000 && scoreValue < 1300) return 'levelSix';
     if (scoreValue >= 1300 && scoreValue < 1500) return 'levelSeven';
     if (scoreValue >= 1500 && scoreValue < 2000) return 'levelTwo';
   }
 };
-
-
 
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
