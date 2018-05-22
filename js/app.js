@@ -15,6 +15,21 @@ function generateObject() {
   };
 }
 
+const pointsSystem = {
+  leftClick: {
+    neutral: -5,
+    save: +15,
+    kill: -15,
+    blank: 0
+  },
+  rightClick: {
+    neutral: -5,
+    save: -15,
+    kill: +15,
+    blank: 0
+  }
+};
+
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
 function reAssignColours(array) {
@@ -69,64 +84,72 @@ $(()=>{
   const $score = $('.score');
   const $lives = $('.lives');
 
+  //accepts arguements from the button click and adjusts the score
+  function playerClick(buttonClicked, squareClicked) {
+    scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
+    $score.text(scoreValue);
+  }
+
   function copyRowAbove(array) {
     array.pop();
     array.unshift(Array(10).fill(null).map(generateObject));
     populateFirstRow(array);
     reAssignColours(array);
-    console.log(array);
     lifeCheck(array[array.length-1]);
     $lives.text(livesLeft);
   }
 
-  $testbuttonTwo.on('click', function() {
-    copyRowAbove(characterGrid);
-  });
+  function scoreUpdater(x, y, squareClicked) {
+    $score.text(scoreValue);
+    characterGrid[x][y].characterValue = 0;
+    console.log(squareClicked);
+    squareClicked.attr('class', 'blank');
+  }
 
-  //Button now obselete due to function it passes being used on button two.
-  $testbutton.on('click', function() {
-    livesLeft--;
-    $lives.text(livesLeft);
-    //$lives.text(livesLeft);
-  });
-
+  //shows the coordinates of square hovered over.
   $map.on('mouseover', 'div', function(){
     $cellAddress.val(`${ $(this).data('x') }-${ $(this).data('y') }`);
   });
 
+
+  //Left Click
   $map.on('click', 'div', function(){
-    //Code for getting the div class that the score system is based on.
     const x = $(this).data('x');
     const y = $(this).data('y');
+    const buttonClicked = 'leftClick';
+    const $squareClicked = $(this);
 
-
-    if ($(this).attr('class') === 'save') {
-      scoreValue = scoreValue + 5;
-    } else {
-      scoreValue = scoreValue - 5;
-    }
-
-    $score.text(scoreValue);
-    characterGrid[x][y].characterValue = 0;
-    $(this).attr('class', 'blank');
+    playerClick(buttonClicked, $squareClicked);
+    scoreUpdater(x, y, $squareClicked);
   });
 
+  //Right Click
   $map.on('contextmenu', 'div', function(e) {
     e.preventDefault();
 
     const x = $(this).data('x');
     const y = $(this).data('y');
+    const buttonClicked = 'rightClick';
+    const $squareClicked = $(this);
 
+    playerClick(buttonClicked, $squareClicked);
+    scoreUpdater(x, y, $squareClicked);
+  });
 
-    if ($(this).attr('class') === 'kill') {
-      scoreValue = scoreValue + 5;
-    } else {
-      scoreValue = scoreValue - 5;
-    }
+  /*
+  #############################
+  Test Buttons
+  #############################
+  */
 
-    $score.text(scoreValue);
-    characterGrid[x][y].characterValue = 0;
-    $(this).attr('class', 'blank');
+  $testbuttonTwo.on('click', function() {
+    copyRowAbove(characterGrid);
+  });
+
+  $testbutton.on('click', function() {
+    const leftClick = 'leftClick';
+    const squareClicked = 'kill';
+    playerClick(leftClick, squareClicked);
   });
 
 
