@@ -8,7 +8,7 @@ let livesLeft = 5;
 let clockIntervalTiming ;
 let gameSpeedTiming;
 let timerLength = 0;
-let difficultySpeed = 1000;
+let difficultySpeed = levelDifficulty.levelOne;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
@@ -33,8 +33,19 @@ const pointsSystem = {
   }
 };
 
+const levelDifficulty = {
+  levelOne: 3000,
+  levelTwo: 2750,
+  levelThree: 2500,
+  levelFour: 2000,
+  levelFive: 1500,
+  levelSix: 1000,
+  levelSeven: 750,
+  levelEight: 500
+};
+
 function gameOver() {
-  if (timerLength === 60 || livesLeft <= 0) {
+  if (timerLength === 300 || livesLeft <= 0) {
     clearInterval(clockIntervalTiming);
     clearInterval(gameSpeedTiming);
   }
@@ -45,20 +56,19 @@ function gameOver() {
 function reAssignColours(array) {
   array.forEach(function(row, i) {
     const $rowElements = $('div[rowNumber*=' + i + ']');
-    $rowElements.attr('class', 'save');
-    row.forEach(function(cell, index) {
+    row.forEach(function(cell, j) {
       switch (cell.characterValue) {
         case 0:
-          $rowElements.eq(index).attr('class', 'blank');
+          $rowElements.eq(j).attr('class', 'blank');
           break;
         case 1:
-          $rowElements.eq(index).attr('class', 'neutral');
+          $rowElements.eq(j).attr('class', 'neutral');
           break;
         case 2:
-          $rowElements.eq(index).attr('class', 'kill');
+          $rowElements.eq(j).attr('class', 'kill');
           break;
         case 3:
-          $rowElements.eq(index).attr('class', 'save');
+          $rowElements.eq(j).attr('class', 'save');
           break;
       }
     });
@@ -71,7 +81,6 @@ function lifeCheck(array) {
     if (element.characterValue === 2 || element.characterValue === 3) livesLeft--;
   });
 }
-
 
 //Assigns random values to the objects in the first row of the grid
 //and then calls on reAssignColours to change their colours.
@@ -94,43 +103,45 @@ $(()=>{
   const $lives = $('.lives');
   const $clock = $('#clock');
 
-  //accepts arguements from the button click and adjusts the score
+  //accepts arguments from the button click and adjusts the score
   function playerClick(buttonClicked, squareClicked) {
     scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
     $score.text(scoreValue);
   }
 
-  // function startGame() {
-  //   clockIntervalTiming = setInterval(startTimer,1000);
-  //   if (timerLength === 0) clearInterval(clockintervalTiming);
-  // }
+  //function inside gameDifficulty that clears the timer, decreases it, and then sets the game at the new difficulty
+  function increaseDifficulty(levelReached) {
+    clearInterval(gameSpeedTiming);
+    difficultySpeed = levelDifficulty[levelReached];
+    gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+  }
 
+  //Increases the game difficulty depending on the score achieved so far.
   function gameDifficulty() {
     switch(scoreValue) {
       case 150:
-        clearInterval(gameSpeedTiming);
-        difficultySpeed = difficultySpeed - 200;
-        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        increaseDifficulty('levelOne');
         break;
       case 300:
-        clearInterval(gameSpeedTiming);
-        difficultySpeed = difficultySpeed - 200;
-        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        increaseDifficulty('levelTwo');
         break;
       case 500:
-        clearInterval(gameSpeedTiming);
-        difficultySpeed = difficultySpeed - 200;
-        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        increaseDifficulty('levelThree');
         break;
-      case 700:
-        clearInterval(gameSpeedTiming);
-        difficultySpeed = difficultySpeed - 200;
-        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+      case 750:
+        increaseDifficulty('levelFour');
         break;
       case 1000:
-        clearInterval(gameSpeedTiming);
-        difficultySpeed = difficultySpeed - 200;
-        gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+        increaseDifficulty('levelFive');
+        break;
+      case 1300:
+        increaseDifficulty('levelSix');
+        break;
+      case 1500:
+        increaseDifficulty('levelSeven');
+        break;
+      case 2000:
+        increaseDifficulty('levelEight');
         break;
     }
     console.log(difficultySpeed);
