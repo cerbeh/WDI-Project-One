@@ -72,21 +72,6 @@ function populateFirstRow(array) {
     element.characterValue = Math.round(Math.random()*3);
   });
 }
-function startGame() {
-  clockIntervalTiming = setInterval(startTimer,1000);
-  if (timerLength === 0) {
-    clearInterval(clockintervalTiming);
-  }
-}
-function startTimer() {
-  timerLength--;
-  $timer.text(timerLength);
-  if (timerLength === 0) {
-    clearInterval(clockIntervalTiming);
-    //timerRunOut();
-    //Event to happen when timer = 0. Clear screen or game over?
-  }
-}
 
 //shifts all data inside characterGrid up one index and inserts a new element in index 0.
 //then runs though the grid reassigning colours.
@@ -99,11 +84,26 @@ $(()=>{
   const $cellAddress = $('#cell-address');
   const $score = $('.score');
   const $lives = $('.lives');
+  const $clock = $('#clock');
 
   //accepts arguements from the button click and adjusts the score
   function playerClick(buttonClicked, squareClicked) {
     scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
     $score.text(scoreValue);
+  }
+
+  // function startGame() {
+  //   clockIntervalTiming = setInterval(startTimer,1000);
+  //   if (timerLength === 0) clearInterval(clockintervalTiming);
+  // }
+  //arguement to be passed through the setInterval function to begin clock
+  function startTimer() {
+    timerLength++;
+    $clock.text(timerLength);
+    if (timerLength === 60) clearInterval(clockIntervalTiming);
+    if (livesLeft <= 0) clearInterval(clockIntervalTiming);
+    //timerRunOut();
+    //Event to happen when timer = 0. Clear screen or game over?
   }
 
   function copyRowAbove(array) {
@@ -163,9 +163,7 @@ $(()=>{
   });
 
   $testbutton.on('click', function() {
-    const leftClick = 'leftClick';
-    const squareClicked = 'kill';
-    playerClick(leftClick, squareClicked);
+    clockIntervalTiming = setInterval(startTimer,1000);
   });
 
 
