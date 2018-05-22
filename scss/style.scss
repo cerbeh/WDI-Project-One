@@ -9,26 +9,42 @@
       width: 50px;
       height: 50px;
       float: left;
-      display: inline;
     }
     div.blank { background-color: papayawhip; }
     div.neutral { background-color: chartreuse; }
     div.kill { background-color: red; }
     div.save { background-color: blue; }
   }
-  .test {
-    display: inline;
-    background-color: orange;
-    height: 100px;
-    width: 100px;
-  }
-  .score-board {
-    height: 60px;
-    width: 200px;
-    background-color: yellow;
-    border: 3px solid saddlebrown;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .side-bar {
+    // display: flex;
+    // flex-direction: column;
+    p { font-size: 20px; }
+    .test {
+      display: inline;
+      background-color: orange;
+      height: 100px;
+      width: 100px;
+    }
+    #clock {
+      display: flex;
+      width: 200px;
+      height: 200px;
+      justify-content: center;
+      align-items: center;
+      background-color: purple;
+      color: white;
+      border: 4px solid peachpuff;
+      border-radius: 10px;
+      font-size: 120px;
+    }
+    .score-board {
+      height: 60px;
+      width: 200px;
+      background-color: yellow;
+      border: 3px solid saddlebrown;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

@@ -5,12 +5,14 @@ const characterGrid = Array(10).fill(null).map(() => {
 
 let scoreValue = 0;
 let livesLeft = 5;
+let clockIntervalTiming ;
+let gameSpeedTiming;
+let timerLength = 0;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
   return {
     characterValue: 0,
-    action: 2,
     rowNumber: 0
   };
 }
@@ -55,11 +57,10 @@ function reAssignColours(array) {
   });
 }
 
+//Will receive the last row of the grid and check if any of the objects hold a value that should decrease lives
 function lifeCheck(array) {
   array.forEach(function(element) {
-    if (element.characterValue === 2 || element.characterValue === 3) {
-      livesLeft--;
-    }
+    if (element.characterValue === 2 || element.characterValue === 3) livesLeft--;
   });
 }
 
@@ -70,6 +71,21 @@ function populateFirstRow(array) {
   array[0].forEach(function(element){
     element.characterValue = Math.round(Math.random()*3);
   });
+}
+function startGame() {
+  clockIntervalTiming = setInterval(startTimer,1000);
+  if (timerLength === 0) {
+    clearInterval(clockintervalTiming);
+  }
+}
+function startTimer() {
+  timerLength--;
+  $timer.text(timerLength);
+  if (timerLength === 0) {
+    clearInterval(clockIntervalTiming);
+    //timerRunOut();
+    //Event to happen when timer = 0. Clear screen or game over?
+  }
 }
 
 //shifts all data inside characterGrid up one index and inserts a new element in index 0.
