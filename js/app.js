@@ -8,7 +8,6 @@ let livesLeft = 5;
 let clockIntervalTiming ;
 let gameSpeedTiming;
 let timerLength = 0;
-let difficultySpeed = levelDifficulty.levelOne;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
@@ -34,14 +33,26 @@ const pointsSystem = {
 };
 
 const levelDifficulty = {
-  levelOne: 3000,
-  levelTwo: 2750,
-  levelThree: 2500,
-  levelFour: 2000,
-  levelFive: 1500,
-  levelSix: 1000,
-  levelSeven: 750,
-  levelEight: 500
+  //Interval timings for each level difficulty
+  levelOneSpeed: 3000,
+  levelTwoSpeed: 2750,
+  levelThreeSpeed: 2500,
+  levelFourSpeed: 2000,
+  levelFiveSpeed: 1500,
+  levelSixSpeed: 1000,
+  levelSevenSpeed: 750,
+  levelEightSpeed: 500,
+  //Passes scoreValue through this function to understand what level has been reached so that speed can be changed.
+  score: function() {
+    if (scoreValue < 150) return 'levelOne';
+    if (scoreValue >= 150 && scoreValue <300) return 'levelTwo';
+    if (scoreValue >= 300 && scoreValue < 500) return 'levelThree';
+    if (scoreValue >= 500 && scoreValue < 750) return 'levelFour';
+    if (scoreValue >= 750 && scoreValue < 1000) return 'levelFive';
+    if (scoreValue >= 1000 && scoreValue < 1300) return 'levelSix';
+    if (scoreValue >= 1300 && scoreValue < 1500) return 'levelSeven';
+    if (scoreValue >= 1500 && scoreValue < 2000) return 'levelTwo';
+  }
 };
 
 function gameOver() {
@@ -109,44 +120,46 @@ $(()=>{
     $score.text(scoreValue);
   }
 
+  //Increases the game difficulty depending on the score achieved so far.
+  function gameDifficulty() {
+    switch(levelDifficulty.score()) {
+      case 'levelTwo':
+        console.log('Reached Level Two');
+        increaseDifficulty('levelTwoSpeed');
+        break;
+      case 'levelThree':
+        console.log('Reached Level Three');
+        increaseDifficulty('levelThreeSpeed');
+        break;
+      case 'levelFour':
+        console.log('reached level four');
+        increaseDifficulty('levelFourSpeed');
+        break;
+      case 'levelFive':
+        console.log('reached level five');
+        increaseDifficulty('levelFiveSpeed');
+        break;
+      case 'levelSix':
+        console.log('reached level six');
+        increaseDifficulty('levelSixSpeed');
+        break;
+      case 'levelSeven':
+        console.log('reached level seven');
+        increaseDifficulty('levelSevenSpeed');
+        break;
+      case 'levelEight':
+        console.log('reached level Eight');
+        increaseDifficulty('levelEightSpeed');
+        break;
+    }
+    moveTilesDown(characterGrid);
+    gameOver();
+  }
+
   //function inside gameDifficulty that clears the timer, decreases it, and then sets the game at the new difficulty
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
-    difficultySpeed = levelDifficulty[levelReached];
-    gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
-  }
-
-  //Increases the game difficulty depending on the score achieved so far.
-  function gameDifficulty() {
-    switch(scoreValue) {
-      case 150:
-        increaseDifficulty('levelOne');
-        break;
-      case 300:
-        increaseDifficulty('levelTwo');
-        break;
-      case 500:
-        increaseDifficulty('levelThree');
-        break;
-      case 750:
-        increaseDifficulty('levelFour');
-        break;
-      case 1000:
-        increaseDifficulty('levelFive');
-        break;
-      case 1300:
-        increaseDifficulty('levelSix');
-        break;
-      case 1500:
-        increaseDifficulty('levelSeven');
-        break;
-      case 2000:
-        increaseDifficulty('levelEight');
-        break;
-    }
-    console.log(difficultySpeed);
-    copyRowAbove(characterGrid);
-    gameOver();
+    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty[levelReached]);
   }
 
   //arguement to be passed through the setInterval function to begin clock
@@ -158,7 +171,7 @@ $(()=>{
     //Event to happen when timer = 0. Clear screen or game over?
   }
 
-  function copyRowAbove(array) {
+  function moveTilesDown(array) {
     array.pop();
     array.unshift(Array(10).fill(null).map(generateObject));
     populateFirstRow(array);
@@ -210,13 +223,14 @@ $(()=>{
 
   //Test button one
   $testbuttonTwo.on('click', function() {
-    copyRowAbove(characterGrid);
+
   });
 
   //Test button two
   $testbutton.on('click', function() {
     clockIntervalTiming = setInterval(startTimer,1000);
-    gameSpeedTiming = setInterval(gameDifficulty,difficultySpeed);
+    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
+    console.log(levelDifficulty['levelOneSpeed']);
   });
 
   //sets the css of each square in the grid depending on value entered in array
