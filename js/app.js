@@ -55,12 +55,7 @@ const levelDifficulty = {
   }
 };
 
-function gameOver() {
-  if (timerLength === 300 || livesLeft <= 0) {
-    clearInterval(clockIntervalTiming);
-    clearInterval(gameSpeedTiming);
-  }
-}
+
 
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
@@ -109,11 +104,11 @@ $(()=>{
   const $testbutton = $('#test');
   const $testbuttonTwo = $('#test2');
   const $map = $('#map');
-  const $cellAddress = $('#cell-address');
   const $score = $('.score');
   const $lives = $('.lives');
   const $clock = $('#clock');
 
+  $map.hide();
   //accepts arguments from the button click and adjusts the score
   function playerClick(buttonClicked, squareClicked) {
     scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
@@ -180,16 +175,27 @@ $(()=>{
     $lives.text(livesLeft);
   }
 
+  function gameOver() {
+    if (timerLength === 300 || livesLeft <= 0) {
+      clearInterval(clockIntervalTiming);
+      clearInterval(gameSpeedTiming);
+      $map.hide();
+    }
+  }
+
   function scoreUpdater(x, y, squareClicked) {
     $score.text(scoreValue);
     characterGrid[x][y].characterValue = 0;
     squareClicked.attr('class', 'blank');
   }
 
-  //shows the coordinates of square hovered over.
-  $map.on('mouseover', 'div', function(){
-    $cellAddress.val(`${ $(this).data('x') }-${ $(this).data('y') }`);
-  });
+  function playGame() {
+    $map.show();
+    $testbutton.hide();
+    moveTilesDown(characterGrid);
+    clockIntervalTiming = setInterval(startTimer,1000);
+    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
+  }
 
   /*
   ##########################
@@ -227,11 +233,7 @@ $(()=>{
   });
 
   //Test button two
-  $testbutton.on('click', function() {
-    clockIntervalTiming = setInterval(startTimer,1000);
-    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
-    console.log(levelDifficulty['levelOneSpeed']);
-  });
+  $testbutton.on('click', playGame);
 
   //sets the css of each square in the grid depending on value entered in array
   $.each(characterGrid, (i, row) => {
