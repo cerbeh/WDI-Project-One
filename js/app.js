@@ -2,17 +2,19 @@
 const characterGrid = Array(10).fill(null).map(() => {
   return Array(10).fill(null).map(generateObject);
 });
+
 let scoreValue = 0;
-//Used to generate the initial objects that occupy the grid,
-//ensuring they're all unique
+let livesLeft = 5;
+
+//Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
   return {
     characterValue: 0,
-    playerCharacter: true,
     action: 2,
     rowNumber: 0
   };
 }
+
 //This function feeds the grid data and the divs through and will
 //append the colour of each corresponding div on the new objects data
 function reAssignColours(array) {
@@ -38,6 +40,14 @@ function reAssignColours(array) {
   });
 }
 
+function lifeCheck(array) {
+  array.forEach(function(element) {
+    if (element.characterValue === 2 || element.characterValue === 3) {
+      livesLeft--;
+    }
+  });
+}
+
 
 //Assigns random values to the objects in the first row of the grid
 //and then calls on reAssignColours to change their colours.
@@ -47,14 +57,8 @@ function populateFirstRow(array) {
   });
 }
 
-//shifts all daya inside characterGrid up one index and inserts a new element in index 0.
+//shifts all data inside characterGrid up one index and inserts a new element in index 0.
 //then runs though the grid reassigning colours.
-function copyRowAbove(array) {
-  array.pop();
-  array.unshift(Array(10).fill(null).map(generateObject));
-  populateFirstRow(array);
-  reAssignColours(array);
-}
 
 $(()=>{
 
@@ -63,7 +67,17 @@ $(()=>{
   const $map = $('#map');
   const $cellAddress = $('#cell-address');
   const $score = $('.score');
+  const $lives = $('.lives');
 
+  function copyRowAbove(array) {
+    array.pop();
+    array.unshift(Array(10).fill(null).map(generateObject));
+    populateFirstRow(array);
+    reAssignColours(array);
+    console.log(array);
+    lifeCheck(array[array.length-1]);
+    $lives.text(livesLeft);
+  }
 
   $testbuttonTwo.on('click', function() {
     copyRowAbove(characterGrid);
@@ -71,7 +85,9 @@ $(()=>{
 
   //Button now obselete due to function it passes being used on button two.
   $testbutton.on('click', function() {
-    populateFirstRow(characterGrid);
+    livesLeft--;
+    $lives.text(livesLeft);
+    //$lives.text(livesLeft);
   });
 
   $map.on('mouseover', 'div', function(){
@@ -83,33 +99,33 @@ $(()=>{
     const x = $(this).data('x');
     const y = $(this).data('y');
 
-    console.log($(this).attr('class'));
-    console.log('left click');
-    console.log($(this).data('x'));
 
-    characterGrid[x][y].characterValue = 0;
     if ($(this).attr('class') === 'save') {
       scoreValue = scoreValue + 5;
     } else {
       scoreValue = scoreValue - 5;
     }
+
     $score.text(scoreValue);
+    characterGrid[x][y].characterValue = 0;
     $(this).attr('class', 'blank');
   });
 
   $map.on('contextmenu', 'div', function(e) {
     e.preventDefault();
+
     const x = $(this).data('x');
     const y = $(this).data('y');
-    characterGrid[x][y].characterValue = 0;
-    console.log($(this).attr('class'));
-    console.log('right click!');
+
+
     if ($(this).attr('class') === 'kill') {
       scoreValue = scoreValue + 5;
     } else {
       scoreValue = scoreValue - 5;
     }
+
     $score.text(scoreValue);
+    characterGrid[x][y].characterValue = 0;
     $(this).attr('class', 'blank');
   });
 
