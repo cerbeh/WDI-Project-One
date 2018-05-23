@@ -1,3 +1,11 @@
+button {
+  background-color: rgba(244, 212, 204, 0.86); }
+  button#play, button#reset {
+    height: 200px;
+    width: 200px;
+    border: 2px solid white;
+    border-radius: 60px; }
+
 * {
   box-sizing: border-box; }
   * body {
@@ -5,74 +13,78 @@
     margin: 10px auto;
     width: 80%;
     background-color: rgba(119, 121, 227, 0.9); }
-    * body .button {
-      display: inline;
+  * .game-wrapper {
+    display: flex;
+    flex-wrap: wrap; }
+    * .game-wrapper #map {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto; }
+      * .game-wrapper #map div {
+        border: 1px solid white;
+        width: 50px;
+        height: 50px;
+        float: left; }
+      * .game-wrapper #map div.blank {
+        background-color: rgba(244, 212, 204, 0.86); }
+      * .game-wrapper #map div.neutral {
+        background-color: chartreuse; }
+      * .game-wrapper #map div.kill {
+        background-color: red; }
+      * .game-wrapper #map div.save {
+        background-color: blue; }
+    * .game-wrapper .side-bar {
       background-color: rgba(222, 222, 191, 0.75);
-      height: 100px;
-      display: flex;
-      justify-content: center; }
-    * body .game-wrapper {
-      display: flex;
-      flex-wrap: wrap; }
-      * body .game-wrapper #map {
-        width: 500px;
-        height: 500px;
-        margin: 0 auto; }
-        * body .game-wrapper #map div {
-          border: 1px solid white;
-          width: 50px;
-          height: 50px;
-          float: left; }
-        * body .game-wrapper #map div.blank {
-          background-color: rgba(244, 212, 204, 0.86); }
-        * body .game-wrapper #map div.neutral {
-          background-color: chartreuse; }
-        * body .game-wrapper #map div.kill {
-          background-color: red; }
-        * body .game-wrapper #map div.save {
-          background-color: blue; }
-      * body .game-wrapper .side-bar {
-        background-color: rgba(222, 222, 191, 0.75);
-        border: 3px solid white;
-        border-radius: 60px;
-        width: 500px;
-        margin: 0 auto;
-        height: 500px;
-        text-align: center;
-        display: flex;
-        align-items: center; }
-        * body .game-wrapper .side-bar ul {
-          font-size: 20px;
-          color: rgba(119, 121, 227, 0.9);
-          padding: 10px 30px; }
-    * body .score-board {
-      margin: 10px auto;
-      height: 250px;
-      width: 80%;
-      background-color: rgba(244, 212, 204, 0.86);
       border: 3px solid white;
       border-radius: 60px;
-      font-size: 30px;
+      width: 500px;
+      margin: 0 auto;
+      height: 500px;
+      text-align: center;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center; }
-      * body .score-board #clock {
-        display: flex;
-        width: 250px;
-        height: 200px;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(222, 222, 191, 0.75);
-        color: white;
-        border: 4px solid white;
-        border-radius: 60px;
-        font-size: 120px; }
-      * body .score-board .score-lives {
-        border: 3px solid white;
-        border-radius: 60px;
-        height: 90%;
-        width: 170px;
-        margin: 10px;
-        font-size: 43px; }
+      * .game-wrapper .side-bar ul {
+        font-size: 20px;
+        color: rgba(119, 121, 227, 0.9);
+        padding: 10px 30px; }
+        * .game-wrapper .side-bar ul li {
+          padding: 10px; }
+          * .game-wrapper .side-bar ul li li.title {
+            color: rgba(222, 222, 191, 0.75);
+            font-size: 40px; }
+  * .score-board {
+    margin: 10px auto;
+    height: 250px;
+    width: 80%;
+    background-color: rgba(244, 212, 204, 0.86);
+    border: 3px solid white;
+    border-radius: 60px;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; }
+    * .score-board #clock {
+      display: flex;
+      width: 250px;
+      height: 200px;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(222, 222, 191, 0.75);
+      color: white;
+      border: 4px solid white;
+      border-radius: 60px;
+      font-size: 120px; }
+    * .score-board .score-lives {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid white;
+      border-radius: 60px;
+      height: 200px;
+      width: 250px;
+      margin: 10px;
+      font-size: 43px; }
 
 /*# sourceMappingURL=style.css.map */

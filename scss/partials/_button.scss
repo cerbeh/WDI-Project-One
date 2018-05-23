@@ -1,0 +1,9 @@
+button {
+  background-color: $background-colour;
+  &#play, &#reset {
+    height: 200px;
+    width: 200px;
+    border: 2px solid $border-colour;
+    border-radius: 60px;
+  }
+}

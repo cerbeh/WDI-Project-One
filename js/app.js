@@ -99,6 +99,7 @@ function populateFirstRow(array) {
 
 $(()=>{
 
+  const highScores = window.localStorage;
   const $playButton = $('#play');
   const $resetButton = $('#reset');
   const $map = $('#map');
@@ -171,7 +172,6 @@ $(()=>{
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       endGameBoard();
-      livesLeft = 0;
       updateScoreboard();
     }
 
@@ -182,6 +182,16 @@ $(()=>{
     $lives.text(livesLeft);
     $clock.text(timerLength);
   }
+
+  function addHighScore() {
+    highScores.setItem('Word One', 1200);
+    highScores.setItem('Word Two', 2000);
+    console.log(highScores);
+    
+    console.log(highScores['Word One']);
+    //if (scoreValue > )
+  }
+  addHighScore();
   /*
   ##########################
   ####Click Interactions####
@@ -237,6 +247,7 @@ $(()=>{
     reAssignColours(characterGrid);
     gameBoard();
     $sideBar.slideDown();
+    $resetButton.fadeOut();
     playGame();
   }
 
@@ -254,10 +265,12 @@ $(()=>{
   }
 
   function gameBoard() {
-    $map.slideDown();
     $playButton.hide();
-    $scoreBoard.show();
-    $sideBar.css('width', '500px');
+    $scoreBoard.fadeIn();
+    //$sideBar.css('width', '500px');
+    $sideBar.animate({'width': '500px'}, 500, function() {
+      $map.slideDown();
+    });
   }
 
   function endGameBoard() {
