@@ -108,7 +108,11 @@ $(()=>{
   const $scoreBoard = $('.score-board');
   const $sideBar = $('.side-bar');
 
-
+  function setup() {
+    pregameBoard();
+    createBoard();
+  }
+  setup();
 
   /*
   ##########################
@@ -116,7 +120,7 @@ $(()=>{
   ##########################
   */
 
-  function gameDifficulty() {
+  function checkGameDifficulty() {
     console.log('difficulty checked');
     switch(levelDifficulty.score()) {
       case 'levelTwo':
@@ -152,12 +156,16 @@ $(()=>{
 
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
-    gameSpeedTiming = setInterval(gameStarter,levelDifficulty[levelReached]);
+    gameSpeedTiming = setInterval(startGame,levelDifficulty[levelReached]);
   }
 
-  //arguement to be passed through the setInterval function to begin clock
+  /*
+  ##########################
+  ########Game Logic########
+  ##########################
+  */
 
-  function moveTilesDown(array) {
+  function tileMover(array) {
     console.log('Tiles moved');
     array.pop();
     array.unshift(Array(10).fill(null).map(generateObject));
@@ -167,8 +175,8 @@ $(()=>{
     $lives.text(livesLeft);
   }
 
-  function gameOver() {
-    if (timerLength === 60 || livesLeft <= 0) {
+  function checkGameOver() {
+    if (timerLength === 2 || livesLeft <= 0) {
       console.log('game over');
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
@@ -187,7 +195,7 @@ $(()=>{
 
   function handleClick(buttonClicked,x,y,$squareClicked) {
     playerClick(buttonClicked, $squareClicked);
-    scoreUpdater(x, y, $squareClicked);
+    updateScore(x, y, $squareClicked);
   }
 
   function playerClick(buttonClicked, squareClicked) {
@@ -195,7 +203,7 @@ $(()=>{
     $score.text(scoreValue);
   }
 
-  function scoreUpdater(x, y, squareClicked) {
+  function updateScore(x, y, squareClicked) {
     console.log('score updated');
     $score.text(scoreValue);
     characterGrid[x][y].characterValue = 0;
@@ -208,24 +216,23 @@ $(()=>{
   ##########################
   */
 
-  function gameStarter() {
-    gameOver();
-    moveTilesDown(characterGrid);
-    gameDifficulty();
+  function startGame() {
+    tileMover(characterGrid);
+    checkGameDifficulty();
   }
 
   function playGame() {
     gameBoard();
-    moveTilesDown(characterGrid);
+    tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
-    gameSpeedTiming = setInterval(gameStarter,levelDifficulty['levelOneSpeed']);
+    gameSpeedTiming = setInterval(startGame,levelDifficulty['levelOneSpeed']);
   }
 
   function startTimer() {
     console.log('clock updated');
     timerLength++;
     $clock.text(timerLength);
-    gameOver();
+    checkGameOver();
   }
 
   /*
@@ -241,9 +248,6 @@ $(()=>{
     $resetButton.hide();
   }
 
-  //This will go in some sort of setup function?
-  pregameBoard();
-
   function gameBoard() {
     $map.slideDown();
     $playButton.hide();
@@ -255,6 +259,29 @@ $(()=>{
     $map.slideUp();
     $sideBar.slideUp();
     $resetButton.show();
+  }
+
+  function createBoard() {
+    $.each(characterGrid, (i, row) => {
+      $.each(row, (j) => {
+        const $element = $('<div />');
+        characterGrid[i][j].rowNumber = i;
+        $element.attr({
+          class: 'blank',
+          rowNumber: i
+        });
+        $element.data({x: i, y: j});
+        $element.appendTo('#map');
+      });
+    });
+  }
+
+  function emptyBoardColours(array) {
+    array.forEach(function(i){
+      i.forEach(function(j){
+        j.characterValue = 0;
+      });
+    });
   }
 
   /*
@@ -285,34 +312,10 @@ $(()=>{
 
   //Reset Button
   $resetButton.on('click', function() {
-    console.log('clicked');
-  });
-
-  //sets the css of each square in the grid depending on value entered in array
-  //This needs to go in to a function that can then be executed for a reset. So does the array filler.
-  $.each(characterGrid, (i, row) => {
-    $.each(row, (j, cell) => {
-      const $element = $('<div />');
-      characterGrid[i][j].rowNumber = i;
-      switch (cell.characterValue) {
-        case 0:
-          $element.attr('class', 'blank');
-          break;
-        case 1:
-          $element.attr('class', 'neutral');
-          break;
-        case 2:
-          $element.attr('class', 'kill');
-          break;
-        case 3:
-          $element.attr('class', 'save');
-          break;
-      }
-      $element.data({x: i, y: j});
-      $element.attr('rowNumber', i);
-      $element.attr('columnNumber', j);
-
-      $element.appendTo('#map');
-    });
+    emptyBoardColours(characterGrid);
+    reAssignColours(characterGrid);
+    gameBoard();
+    $sideBar.show();
+    playGame();
   });
 });
