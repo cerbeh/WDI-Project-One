@@ -1,14 +1,16 @@
 @import "helper/_variables.scss";
 
 *{
+  //font-family: 'Oswald', sans-serif;
   box-sizing: border-box;
   body {
+    font-family: 'Oswald', sans-serif;
     margin: 10px auto;
     width: 80%;
     background-color: $default-text-colour;
-    .test {
+    .button {
       display: inline;
-      background-color: $background-colour;
+      background-color: $alternate-colour;
       height: 100px;
       display: flex;
       justify-content: center;
@@ -24,7 +26,7 @@
         height: 50px;
         float: left;
       }
-      div.blank { background-color: papayawhip; }
+      div.blank { background-color: $background-colour; }
       div.neutral { background-color: chartreuse; }
       div.kill { background-color: red; }
       div.save { background-color: blue; }
@@ -35,12 +37,13 @@
       border-radius: 60px;
       width: 80%;
       margin: 0 auto;
-      height: 100px;
+      height: 400px;
+      text-align: center;
       display: flex;
       align-items: center;
       // display: flex;
       // flex-direction: column;
-      p {
+      ul {
         font-size: 20px;
         color: $default-text-colour;
         padding: 10px 30px;

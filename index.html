@@ -6,22 +6,37 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="./js/app.js" charset="utf-8"></script>
   <link rel="stylesheet" href="./css/reset.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
   <section id="game-on">
-    <button id="test" class="test">Play button</button>
+    <button id="play" class="button">Play button</button>
       <div id="map"></div>
       <div class="side-bar">
-        <p>Instructions: Left click blue squares, right click red squares. Don't click on the others!</p>
+          <ul class="instructions">
+            <li>Instructions:</li>
+            <li>Gain Points</li>
+            <li>Left click Blue Square: 15points</li>
+            <li>Right click Red Square: 15points</li>
+            <li>Lose Points</li>
+            <li>CLick ANY Green Square: -5points</li>
+            <li>Left click Red Square: -15points</li>
+            <li>Right click Blue Square: -15points</li>
+            <li>Lives</li>
+            <li>Lose a life for every Blue or Red square that gets to the bottom.</li>
+            <li>When you get to zero lives... GAME OVER!</li>
+          </ul>
       </div>
       <div class="score-board">
         <div id="clock">0</div>
         <ul class="score-lives">
-          <li>Score: <span class="score">0</span></li>
-          <li>Lives: <span class="lives">5</span></li>
+          <li>Score: </li>
+          <li> <span class="score">0</span></li>
+          <li>Lives:</li>
+          <li><span class="lives">5</span></li>
         </ul>
-        <button id="reset" class="test">Reset</button>
+        <button id="reset" class="button">Reset</button>
       </div>
   </section>
 </body>

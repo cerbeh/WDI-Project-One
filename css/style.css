@@ -1,12 +1,13 @@
 * {
   box-sizing: border-box; }
   * body {
+    font-family: 'Oswald', sans-serif;
     margin: 10px auto;
     width: 80%;
     background-color: rgba(119, 121, 227, 0.9); }
-    * body .test {
+    * body .button {
       display: inline;
-      background-color: rgba(244, 212, 204, 0.86);
+      background-color: rgba(222, 222, 191, 0.75);
       height: 100px;
       display: flex;
       justify-content: center; }
@@ -21,7 +22,7 @@
         height: 50px;
         float: left; }
       * body #map div.blank {
-        background-color: papayawhip; }
+        background-color: rgba(244, 212, 204, 0.86); }
       * body #map div.neutral {
         background-color: chartreuse; }
       * body #map div.kill {
@@ -34,10 +35,11 @@
       border-radius: 60px;
       width: 80%;
       margin: 0 auto;
-      height: 100px;
+      height: 400px;
+      text-align: center;
       display: flex;
       align-items: center; }
-      * body .side-bar p {
+      * body .side-bar ul {
         font-size: 20px;
         color: rgba(119, 121, 227, 0.9);
         padding: 10px 30px; }

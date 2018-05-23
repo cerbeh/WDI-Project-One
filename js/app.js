@@ -99,7 +99,7 @@ function populateFirstRow(array) {
 
 $(()=>{
 
-  const $playButton = $('#test');
+  const $playButton = $('#play');
   const $resetButton = $('#reset');
   const $map = $('#map');
   const $score = $('.score');
@@ -116,34 +116,31 @@ $(()=>{
   }
 
   //Increases the game difficulty depending on the score achieved so far.
+
+  //This function is called gameDifficulty but also executes the code to be done every tick.
+  //Move functions out of it? Have a different function that the game ticks are happening on
+  //and they call on this function to change difficulty
   function gameDifficulty() {
     switch(levelDifficulty.score()) {
       case 'levelTwo':
-        console.log('Reached Level Two');
         increaseDifficulty('levelTwoSpeed');
         break;
       case 'levelThree':
-        console.log('Reached Level Three');
         increaseDifficulty('levelThreeSpeed');
         break;
       case 'levelFour':
-        console.log('reached level four');
         increaseDifficulty('levelFourSpeed');
         break;
       case 'levelFive':
-        console.log('reached level five');
         increaseDifficulty('levelFiveSpeed');
         break;
       case 'levelSix':
-        console.log('reached level six');
         increaseDifficulty('levelSixSpeed');
         break;
       case 'levelSeven':
-        console.log('reached level seven');
         increaseDifficulty('levelSevenSpeed');
         break;
       case 'levelEight':
-        console.log('reached level Eight');
         increaseDifficulty('levelEightSpeed');
         break;
     }
@@ -162,8 +159,6 @@ $(()=>{
     timerLength++;
     $clock.text(timerLength);
     gameOver();
-    //timerRunOut();
-    //Event to happen when timer = 0. Clear screen or game over?
   }
 
   function moveTilesDown(array) {
@@ -180,6 +175,8 @@ $(()=>{
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       endGameBoard();
+      //Function to change scoreboard states? (Lives, score, time?)
+      $lives.text(0);
     }
   }
 
@@ -189,30 +186,39 @@ $(()=>{
     squareClicked.attr('class', 'blank');
   }
 
-  function pregameBoard() {
-    $map.hide();
-    $scoreBoard.hide();
-    $sideBar.css('width', '700px');
-    $resetButton.hide();
-  }
-  pregameBoard();
-
-  function gameBoard() {
-    $map.show();
-    $playButton.hide();
-    $scoreBoard.show();
-    $sideBar.css('width', '300px');
-  }
-  function endGameBoard() {
-    $map.hide();
-    $sideBar.hide();
-  }
-
   function playGame() {
     gameBoard();
     moveTilesDown(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
+  }
+
+  /*
+  ##########################
+  ####Game Board States#####
+  ##########################
+  */
+
+  function pregameBoard() {
+    $map.hide();
+    $scoreBoard.hide();
+    $sideBar.css('width', '850px');
+    $resetButton.hide();
+  }
+
+  //This will go in some sort of setup function?
+  pregameBoard();
+
+  function gameBoard() {
+    $map.slideDown();
+    $playButton.hide();
+    $scoreBoard.show();
+    $sideBar.css('width', '500px');
+  }
+  function endGameBoard() {
+    $map.slideUp();
+    $sideBar.hide();
+    $resetButton.show();
   }
 
   /*
@@ -252,7 +258,7 @@ $(()=>{
 
   //Reset Button
   $resetButton.on('click', function() {
-
+    console.log('clicked');
   });
 
   //sets the css of each square in the grid depending on value entered in array
