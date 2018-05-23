@@ -116,9 +116,6 @@ $(()=>{
   ##########################
   */
 
-  //This function is called gameDifficulty but also executes the code to be done every tick.
-  //Move functions out of it? Have a different function that the game ticks are happening on
-  //and they call on this function to change difficulty
   function gameDifficulty() {
     console.log('difficulty checked');
     switch(levelDifficulty.score()) {
@@ -153,19 +150,12 @@ $(()=>{
     }
   }
 
-  //function inside gameDifficulty that clears the timer, decreases it, and then sets the game at the new difficulty
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
     gameSpeedTiming = setInterval(gameStarter,levelDifficulty[levelReached]);
   }
 
   //arguement to be passed through the setInterval function to begin clock
-  function startTimer() {
-    console.log('clock updated');
-    timerLength++;
-    $clock.text(timerLength);
-    gameOver();
-  }
 
   function moveTilesDown(array) {
     console.log('Tiles moved');
@@ -195,11 +185,7 @@ $(()=>{
   ##########################
   */
 
-  function handleClick(buttonClicked) {
-    const x = $(this).data('x');
-    const y = $(this).data('y');
-    const $squareClicked = $(this);
-
+  function handleClick(buttonClicked,x,y,$squareClicked) {
     playerClick(buttonClicked, $squareClicked);
     scoreUpdater(x, y, $squareClicked);
   }
@@ -216,6 +202,12 @@ $(()=>{
     squareClicked.attr('class', 'blank');
   }
 
+  /*
+  ##########################
+  #######Game Starter#######
+  ##########################
+  */
+
   function gameStarter() {
     gameOver();
     moveTilesDown(characterGrid);
@@ -223,11 +215,17 @@ $(()=>{
   }
 
   function playGame() {
-    console.log('play game executed');
     gameBoard();
     moveTilesDown(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(gameStarter,levelDifficulty['levelOneSpeed']);
+  }
+
+  function startTimer() {
+    console.log('clock updated');
+    timerLength++;
+    $clock.text(timerLength);
+    gameOver();
   }
 
   /*
@@ -267,13 +265,19 @@ $(()=>{
 
   //Left Click
   $map.on('click', 'div', function(){
-    handleClick('leftClick');
+    const x = $(this).data('x');
+    const y = $(this).data('y');
+    const $squareClicked = $(this);
+    handleClick('leftClick',x,y,$squareClicked);
   });
 
   //Right Click
   $map.on('contextmenu', 'div', function(e) {
+    const x = $(this).data('x');
+    const y = $(this).data('y');
+    const $squareClicked = $(this);
+    handleClick('rightClick',x,y,$squareClicked);
     e.preventDefault();
-    handleClick('rightClick');
   });
 
   //Play Button
@@ -285,6 +289,7 @@ $(()=>{
   });
 
   //sets the css of each square in the grid depending on value entered in array
+  //This needs to go in to a function that can then be executed for a reset. So does the array filler.
   $.each(characterGrid, (i, row) => {
     $.each(row, (j, cell) => {
       const $element = $('<div />');
