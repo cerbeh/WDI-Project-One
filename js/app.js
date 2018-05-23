@@ -8,6 +8,7 @@ let livesLeft = 5;
 let clockIntervalTiming ;
 let gameSpeedTiming;
 let timerLength = 0;
+let playerName ;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
@@ -108,11 +109,30 @@ $(()=>{
   const $clock = $('#clock');
   const $scoreBoard = $('.score-board');
   const $sideBar = $('.side-bar');
+  const $submit = $('input:submit');
+  const $input = $('input:text');
+  const $playerName = $('#player-name');
+  const $highScore = $('.high-score');
+
+  //THESE ARE ALL GOING IN AN OBJECT TOMORROW!
+  const $firstPlaceName = $('#first-place-name');
+  const $secondPlaceName = $('#second-place-name');
+  const $thirdPlaceName = $('#third-place-name');
+  const $fourthPlaceName = $('#fourth-place-name');
+  const $fifthPlaceName = $('#fifth-place-name');
+  const $firstPlaceScore = $('#first-score');
+  const $secondPlaceScore = $('#second-score');
+  const $thirdPlaceScore = $('#third-score');
+  const $fourthPlaceScore = $('#fourth-score');
+  const $fifthPlaceScore = $('#fifth-score');
 
   function setup() {
     pregameBoard();
     createBoard();
+    defaultHighScores();
+    setHighScores();
   }
+
   setup();
 
   /*
@@ -173,6 +193,7 @@ $(()=>{
       clearInterval(gameSpeedTiming);
       endGameBoard();
       updateScoreboard();
+      addHighScore();
     }
 
   }
@@ -183,15 +204,48 @@ $(()=>{
     $clock.text(timerLength);
   }
 
-  function addHighScore() {
-    highScores.setItem('Word One', 1200);
-    highScores.setItem('Word Two', 2000);
-    console.log(highScores);
-    
-    console.log(highScores['Word One']);
-    //if (scoreValue > )
+  /*
+  ##########################
+  #######High Scores########
+  ##########################
+  */
+
+  function defaultHighScores() {
+    highScores.clear();
+    highScores.setItem('Edward', 700);
+    highScores.setItem('Flamie', 500);
+    highScores.setItem('Zeus', 250);
+    highScores.setItem('s1mple', 100);
+    highScores.setItem('electronic', 50);
   }
-  addHighScore();
+
+  function setHighScores() {
+    const scores = Object.values(highScores).sort(function(a,b){
+      return b - a;
+    });
+    $firstPlaceScore.text(scores[0]);
+    $secondPlaceScore.text(scores[1]);
+    $thirdPlaceScore.text(scores[2]);
+    $fourthPlaceScore.text(scores[3]);
+    $fifthPlaceScore.text(scores[4]);
+
+
+    const orderedScoreboard = Object.keys(highScores).sort(function(a,b){
+      return highScores[b]-highScores[a];
+    });
+    console.log(orderedScoreboard);
+    console.log(highScores);
+    $firstPlaceName.text(orderedScoreboard[0]);
+    $secondPlaceName.text(orderedScoreboard[1]);
+    $thirdPlaceName.text(orderedScoreboard[2]);
+    $fourthPlaceName.text(orderedScoreboard[3]);
+    $fifthPlaceName.text(orderedScoreboard[4]);
+  }
+
+  function addHighScore() {
+    const highScoreNames = highScores.setItem(playerName, scoreValue);
+
+  }
   /*
   ##########################
   ####Click Interactions####
@@ -231,6 +285,7 @@ $(()=>{
     livesLeft = 5;
     scoreValue = 0;
     updateScoreboard();
+    $highScore.text(highScores);
     tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(startGame,levelDifficulty['levelOneSpeed']);
@@ -260,6 +315,7 @@ $(()=>{
   function pregameBoard() {
     $map.hide();
     $scoreBoard.hide();
+    $playButton.hide();
     $sideBar.css('width', '850px');
     $resetButton.hide();
   }
@@ -277,6 +333,7 @@ $(()=>{
     $map.slideUp();
     $sideBar.slideUp();
     $resetButton.show();
+    $playerName.hide();
   }
 
   function createBoard() {
@@ -307,6 +364,19 @@ $(()=>{
   ##########BUTTONS#########
   ##########################
   */
+  //Submit Button
+  $submit.on('click', function() {
+    playerName = $input.val();
+    $playerName.text(playerName);
+    $submit.hide();
+    $input.hide();
+    $playButton.fadeIn();
+    $highScore.hide();
+  });
+
+
+  //Play Button
+  $playButton.on('click', playGame);
 
   //Left Click
   $map.on('click', 'div', function(){
@@ -324,9 +394,6 @@ $(()=>{
     handleClick('rightClick',x,y,$squareClicked);
     e.preventDefault();
   });
-
-  //Play Button
-  $playButton.on('click', playGame);
 
   //Reset Button
   $resetButton.on('click', resetGame);

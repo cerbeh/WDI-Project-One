@@ -40,7 +40,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      //flex-direction: column;
       ul {
         font-size: 20px;
         color: $default-text-colour;
@@ -66,29 +65,37 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    #clock {
-      display: flex;
-      width: 250px;
-      height: 200px;
-      justify-content: center;
-      align-items: center;
-      background-color: $alternate-colour;
-      color: white;
-      border: 4px solid $border-colour;
-      border-radius: 60px;
-      font-size: 120px;
+    .timer {
+      ul {
+        li {
+          text-align: center;
+          margin: 7px;
+        }
+        li#clock {
+          display: flex;
+          width: 250px;
+          height: 200px;
+          justify-content: center;
+          align-items: center;
+          background-color: $alternate-colour;
+          color: white;
+          border: 4px solid $border-colour;
+          border-radius: 60px;
+          font-size: 120px;
+        }
+      }
     }
-    .score-lives {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      border: 3px solid $border-colour;
-      border-radius: 60px;
-      height: 200px;
-      width: 250px;
-      margin: 10px;
-      font-size: 43px;
-    }
+  }
+  .score-lives {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid $border-colour;
+    border-radius: 60px;
+    height: 200px;
+    width: 250px;
+    margin: 10px;
+    font-size: 43px;
   }
 }

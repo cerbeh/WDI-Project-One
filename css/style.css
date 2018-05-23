@@ -2,9 +2,26 @@ button {
   background-color: rgba(244, 212, 204, 0.86); }
   button#play, button#reset {
     height: 200px;
-    width: 200px;
+    width: 250px;
     border: 2px solid white;
     border-radius: 60px; }
+  button#play {
+    margin: 0 97px; }
+
+input {
+  border: 2px solid white;
+  border-radius: 60px; }
+  input[type="text"] {
+    height: 75px;
+    font-size: 20px;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 25px; }
+  input[type="submit"] {
+    padding: 20px;
+    font-size: 25px;
+    background-color: rgba(244, 212, 204, 0.86);
+    color: rgba(119, 121, 227, 0.9); }
 
 * {
   box-sizing: border-box; }
@@ -64,7 +81,10 @@ button {
     display: flex;
     justify-content: space-around;
     align-items: center; }
-    * .score-board #clock {
+    * .score-board .timer ul li {
+      text-align: center;
+      margin: 7px; }
+    * .score-board .timer ul li#clock {
       display: flex;
       width: 250px;
       height: 200px;
@@ -75,16 +95,16 @@ button {
       border: 4px solid white;
       border-radius: 60px;
       font-size: 120px; }
-    * .score-board .score-lives {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      border: 3px solid white;
-      border-radius: 60px;
-      height: 200px;
-      width: 250px;
-      margin: 10px;
-      font-size: 43px; }
+  * .score-lives {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid white;
+    border-radius: 60px;
+    height: 200px;
+    width: 250px;
+    margin: 10px;
+    font-size: 43px; }
 
 /*# sourceMappingURL=style.css.map */
