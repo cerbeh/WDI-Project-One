@@ -11,38 +11,40 @@
       height: 100px;
       display: flex;
       justify-content: center; }
-    * body #map {
-      width: 500px;
-      height: 500px;
-      display: inline-block;
-      margin: 0 auto; }
-      * body #map div {
-        border: 1px solid white;
-        width: 50px;
-        height: 50px;
-        float: left; }
-      * body #map div.blank {
-        background-color: rgba(244, 212, 204, 0.86); }
-      * body #map div.neutral {
-        background-color: chartreuse; }
-      * body #map div.kill {
-        background-color: red; }
-      * body #map div.save {
-        background-color: blue; }
-    * body .side-bar {
-      background-color: rgba(222, 222, 191, 0.75);
-      border: 3px solid white;
-      border-radius: 60px;
-      width: 80%;
-      margin: 0 auto;
-      height: 400px;
-      text-align: center;
+    * body .game-wrapper {
       display: flex;
-      align-items: center; }
-      * body .side-bar ul {
-        font-size: 20px;
-        color: rgba(119, 121, 227, 0.9);
-        padding: 10px 30px; }
+      flex-wrap: wrap; }
+      * body .game-wrapper #map {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto; }
+        * body .game-wrapper #map div {
+          border: 1px solid white;
+          width: 50px;
+          height: 50px;
+          float: left; }
+        * body .game-wrapper #map div.blank {
+          background-color: rgba(244, 212, 204, 0.86); }
+        * body .game-wrapper #map div.neutral {
+          background-color: chartreuse; }
+        * body .game-wrapper #map div.kill {
+          background-color: red; }
+        * body .game-wrapper #map div.save {
+          background-color: blue; }
+      * body .game-wrapper .side-bar {
+        background-color: rgba(222, 222, 191, 0.75);
+        border: 3px solid white;
+        border-radius: 60px;
+        width: 500px;
+        margin: 0 auto;
+        height: 500px;
+        text-align: center;
+        display: flex;
+        align-items: center; }
+        * body .game-wrapper .side-bar ul {
+          font-size: 20px;
+          color: rgba(119, 121, 227, 0.9);
+          padding: 10px 30px; }
     * body .score-board {
       margin: 10px auto;
       height: 250px;

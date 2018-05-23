@@ -239,7 +239,7 @@ $(()=>{
     $sideBar.slideDown();
     playGame();
   }
-  
+
   /*
   ##########################
   ####Game Board States#####

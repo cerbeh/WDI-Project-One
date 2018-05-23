@@ -15,38 +15,42 @@
       display: flex;
       justify-content: center;
     }
-    #map {
-      width: 500px;
-      height: 500px;
-      display: inline-block;
-      margin: 0 auto;
-      div {
-        border: 1px solid $border-colour;
-        width: 50px;
-        height: 50px;
-        float: left;
-      }
-      div.blank { background-color: $background-colour; }
-      div.neutral { background-color: chartreuse; }
-      div.kill { background-color: red; }
-      div.save { background-color: blue; }
-    }
-    .side-bar {
-      background-color: $alternate-colour;
-      border: 3px solid $border-colour;
-      border-radius: 60px;
-      width: 80%;
-      margin: 0 auto;
-      height: 400px;
-      text-align: center;
+    .game-wrapper {
       display: flex;
-      align-items: center;
-      // display: flex;
-      // flex-direction: column;
-      ul {
-        font-size: 20px;
-        color: $default-text-colour;
-        padding: 10px 30px;
+      flex-wrap: wrap;
+      #map {
+        width: 500px;
+        height: 500px;
+        //display: inline-block;
+        margin: 0 auto;
+        div {
+          border: 1px solid $border-colour;
+          width: 50px;
+          height: 50px;
+          float: left;
+        }
+        div.blank { background-color: $background-colour; }
+        div.neutral { background-color: chartreuse; }
+        div.kill { background-color: red; }
+        div.save { background-color: blue; }
+      }
+      .side-bar {
+        background-color: $alternate-colour;
+        border: 3px solid $border-colour;
+        border-radius: 60px;
+        width: 500px;
+        margin: 0 auto;
+        height: 500px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        // display: flex;
+        // flex-direction: column;
+        ul {
+          font-size: 20px;
+          color: $default-text-colour;
+          padding: 10px 30px;
+        }
       }
     }
     .score-board {
