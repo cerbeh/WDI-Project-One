@@ -17,6 +17,7 @@
       width: 500px;
       height: 500px;
       display: inline-block;
+      margin: 0 auto;
       div {
         border: 1px solid $border-colour;
         width: 50px;
@@ -58,7 +59,7 @@
       align-items: center;
       #clock {
         display: flex;
-        width: 200px;
+        width: 250px;
         height: 200px;
         justify-content: center;
         align-items: center;
@@ -72,8 +73,9 @@
         border: 3px solid $border-colour;
         border-radius: 60px;
         height: 90%;
-        width: 150px;
+        width: 170px;
         margin: 10px;
+        font-size: 43px;
       }
     }
   }

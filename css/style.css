@@ -13,7 +13,8 @@
     * body #map {
       width: 500px;
       height: 500px;
-      display: inline-block; }
+      display: inline-block;
+      margin: 0 auto; }
       * body #map div {
         border: 1px solid white;
         width: 50px;
@@ -53,7 +54,7 @@
       align-items: center; }
       * body .score-board #clock {
         display: flex;
-        width: 200px;
+        width: 250px;
         height: 200px;
         justify-content: center;
         align-items: center;
@@ -66,7 +67,8 @@
         border: 3px solid white;
         border-radius: 60px;
         height: 90%;
-        width: 150px;
-        margin: 10px; }
+        width: 170px;
+        margin: 10px;
+        font-size: 43px; }
 
 /*# sourceMappingURL=style.css.map */

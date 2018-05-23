@@ -99,14 +99,16 @@ function populateFirstRow(array) {
 
 $(()=>{
 
-  const $testbutton = $('#test');
-  const $testbuttonTwo = $('#test2');
+  const $playButton = $('#test');
+  const $resetButton = $('#reset');
   const $map = $('#map');
   const $score = $('.score');
   const $lives = $('.lives');
   const $clock = $('#clock');
+  const $scoreBoard = $('.score-board');
+  const $sideBar = $('.side-bar');
 
-  $map.hide();
+
   //accepts arguments from the button click and adjusts the score
   function playerClick(buttonClicked, squareClicked) {
     scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
@@ -177,7 +179,7 @@ $(()=>{
     if (timerLength === 300 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
-      $map.hide();
+      endGameBoard();
     }
   }
 
@@ -187,9 +189,27 @@ $(()=>{
     squareClicked.attr('class', 'blank');
   }
 
-  function playGame() {
+  function pregameBoard() {
+    $map.hide();
+    $scoreBoard.hide();
+    $sideBar.css('width', '700px');
+    $resetButton.hide();
+  }
+  pregameBoard();
+
+  function gameBoard() {
     $map.show();
-    $testbutton.hide();
+    $playButton.hide();
+    $scoreBoard.show();
+    $sideBar.css('width', '300px');
+  }
+  function endGameBoard() {
+    $map.hide();
+    $sideBar.hide();
+  }
+
+  function playGame() {
+    gameBoard();
     moveTilesDown(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
@@ -208,6 +228,7 @@ $(()=>{
     const buttonClicked = 'leftClick';
     const $squareClicked = $(this);
 
+    //Needs refactoring. Repeated in both button clicks. Condense functions used?
     playerClick(buttonClicked, $squareClicked);
     scoreUpdater(x, y, $squareClicked);
   });
@@ -221,17 +242,18 @@ $(()=>{
     const buttonClicked = 'rightClick';
     const $squareClicked = $(this);
 
+    //Needs refactoring. Repeated in both button clicks. Condense functions used?
     playerClick(buttonClicked, $squareClicked);
     scoreUpdater(x, y, $squareClicked);
   });
 
-  //Test button one
-  $testbuttonTwo.on('click', function() {
+  //Play Button
+  $playButton.on('click', playGame);
+
+  //Reset Button
+  $resetButton.on('click', function() {
 
   });
-
-  //Test button two
-  $testbutton.on('click', playGame);
 
   //sets the css of each square in the grid depending on value entered in array
   $.each(characterGrid, (i, row) => {
@@ -251,8 +273,6 @@ $(()=>{
         case 3:
           $element.attr('class', 'save');
           break;
-        //case 4:
-        //case 5:
       }
       $element.data({x: i, y: j});
       $element.attr('rowNumber', i);
