@@ -38,10 +38,10 @@ const levelDifficulty = {
   levelTwoSpeed: 2500,
   levelThreeSpeed: 2250,
   levelFourSpeed: 2000,
-  levelFiveSpeed: 1500,
-  levelSixSpeed: 1000,
-  levelSevenSpeed: 750,
-  levelEightSpeed: 500,
+  levelFiveSpeed: 1700,
+  levelSixSpeed: 1500,
+  levelSevenSpeed: 1250,
+  levelEightSpeed: 1000,
   //Passes scoreValue through this function to understand what level has been reached so that speed can be changed.
   score: function() {
     if (scoreValue < 150) return 'levelOne';
@@ -51,7 +51,7 @@ const levelDifficulty = {
     if (scoreValue >= 750 && scoreValue < 1000) return 'levelFive';
     if (scoreValue >= 1000 && scoreValue < 1300) return 'levelSix';
     if (scoreValue >= 1300 && scoreValue < 1500) return 'levelSeven';
-    if (scoreValue >= 1500 && scoreValue < 2000) return 'levelTwo';
+    if (scoreValue >= 1500 && scoreValue < 2000) return 'levelEight';
   }
 };
 
@@ -109,59 +109,66 @@ $(()=>{
   const $sideBar = $('.side-bar');
 
 
-  //accepts arguments from the button click and adjusts the score
-  function playerClick(buttonClicked, squareClicked) {
-    scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
-    $score.text(scoreValue);
-  }
 
-  //Increases the game difficulty depending on the score achieved so far.
+  /*
+  ##########################
+  ###Difficulty Settings####
+  ##########################
+  */
 
   //This function is called gameDifficulty but also executes the code to be done every tick.
   //Move functions out of it? Have a different function that the game ticks are happening on
   //and they call on this function to change difficulty
   function gameDifficulty() {
+    console.log('difficulty checked');
     switch(levelDifficulty.score()) {
       case 'levelTwo':
         increaseDifficulty('levelTwoSpeed');
+        console.log('2');
         break;
       case 'levelThree':
         increaseDifficulty('levelThreeSpeed');
+        console.log('3');
         break;
       case 'levelFour':
         increaseDifficulty('levelFourSpeed');
+        console.log('4');
         break;
       case 'levelFive':
+        console.log('5');
         increaseDifficulty('levelFiveSpeed');
         break;
       case 'levelSix':
         increaseDifficulty('levelSixSpeed');
+        console.log('6');
         break;
       case 'levelSeven':
+        console.log('7');
         increaseDifficulty('levelSevenSpeed');
         break;
       case 'levelEight':
+        console.log('8');
         increaseDifficulty('levelEightSpeed');
         break;
     }
-    moveTilesDown(characterGrid);
-    gameOver();
   }
 
   //function inside gameDifficulty that clears the timer, decreases it, and then sets the game at the new difficulty
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
-    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty[levelReached]);
+    gameSpeedTiming = setInterval(gameStarter,levelDifficulty[levelReached]);
   }
 
   //arguement to be passed through the setInterval function to begin clock
   function startTimer() {
+    console.log('clock updated');
     timerLength++;
     $clock.text(timerLength);
     gameOver();
   }
 
   function moveTilesDown(array) {
+    console.log('Tiles moved');
     array.pop();
     array.unshift(Array(10).fill(null).map(generateObject));
     populateFirstRow(array);
@@ -171,26 +178,56 @@ $(()=>{
   }
 
   function gameOver() {
-    if (timerLength === 300 || livesLeft <= 0) {
+    if (timerLength === 60 || livesLeft <= 0) {
+      console.log('game over');
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       endGameBoard();
       //Function to change scoreboard states? (Lives, score, time?)
       $lives.text(0);
     }
+
+  }
+
+  /*
+  ##########################
+  ####Click Interactions####
+  ##########################
+  */
+
+  function handleClick(buttonClicked) {
+    const x = $(this).data('x');
+    const y = $(this).data('y');
+    const $squareClicked = $(this);
+
+    playerClick(buttonClicked, $squareClicked);
+    scoreUpdater(x, y, $squareClicked);
+  }
+
+  function playerClick(buttonClicked, squareClicked) {
+    scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
+    $score.text(scoreValue);
   }
 
   function scoreUpdater(x, y, squareClicked) {
+    console.log('score updated');
     $score.text(scoreValue);
     characterGrid[x][y].characterValue = 0;
     squareClicked.attr('class', 'blank');
   }
 
+  function gameStarter() {
+    gameOver();
+    moveTilesDown(characterGrid);
+    gameDifficulty();
+  }
+
   function playGame() {
+    console.log('play game executed');
     gameBoard();
     moveTilesDown(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
-    gameSpeedTiming = setInterval(gameDifficulty,levelDifficulty['levelOneSpeed']);
+    gameSpeedTiming = setInterval(gameStarter,levelDifficulty['levelOneSpeed']);
   }
 
   /*
@@ -215,9 +252,10 @@ $(()=>{
     $scoreBoard.show();
     $sideBar.css('width', '500px');
   }
+
   function endGameBoard() {
     $map.slideUp();
-    $sideBar.hide();
+    $sideBar.slideUp();
     $resetButton.show();
   }
 
@@ -229,28 +267,13 @@ $(()=>{
 
   //Left Click
   $map.on('click', 'div', function(){
-    const x = $(this).data('x');
-    const y = $(this).data('y');
-    const buttonClicked = 'leftClick';
-    const $squareClicked = $(this);
-
-    //Needs refactoring. Repeated in both button clicks. Condense functions used?
-    playerClick(buttonClicked, $squareClicked);
-    scoreUpdater(x, y, $squareClicked);
+    handleClick('leftClick');
   });
 
   //Right Click
   $map.on('contextmenu', 'div', function(e) {
     e.preventDefault();
-
-    const x = $(this).data('x');
-    const y = $(this).data('y');
-    const buttonClicked = 'rightClick';
-    const $squareClicked = $(this);
-
-    //Needs refactoring. Repeated in both button clicks. Condense functions used?
-    playerClick(buttonClicked, $squareClicked);
-    scoreUpdater(x, y, $squareClicked);
+    handleClick('rightClick');
   });
 
   //Play Button
