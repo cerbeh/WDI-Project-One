@@ -121,34 +121,26 @@ $(()=>{
   */
 
   function checkGameDifficulty() {
-    console.log('difficulty checked');
     switch(levelDifficulty.score()) {
       case 'levelTwo':
         increaseDifficulty('levelTwoSpeed');
-        console.log('2');
         break;
       case 'levelThree':
         increaseDifficulty('levelThreeSpeed');
-        console.log('3');
         break;
       case 'levelFour':
         increaseDifficulty('levelFourSpeed');
-        console.log('4');
         break;
       case 'levelFive':
-        console.log('5');
         increaseDifficulty('levelFiveSpeed');
         break;
       case 'levelSix':
         increaseDifficulty('levelSixSpeed');
-        console.log('6');
         break;
       case 'levelSeven':
-        console.log('7');
         increaseDifficulty('levelSevenSpeed');
         break;
       case 'levelEight':
-        console.log('8');
         increaseDifficulty('levelEightSpeed');
         break;
     }
@@ -166,27 +158,30 @@ $(()=>{
   */
 
   function tileMover(array) {
-    console.log('Tiles moved');
     array.pop();
     array.unshift(Array(10).fill(null).map(generateObject));
     populateFirstRow(array);
     reAssignColours(array);
     lifeCheck(array[array.length-1]);
-    $lives.text(livesLeft);
+    updateScoreboard();
   }
 
   function checkGameOver() {
-    if (timerLength === 2 || livesLeft <= 0) {
-      console.log('game over');
+    if (timerLength === 90 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       endGameBoard();
-      //Function to change scoreboard states? (Lives, score, time?)
-      $lives.text(0);
+      livesLeft = 0;
+      updateScoreboard();
     }
 
   }
 
+  function updateScoreboard() {
+    $score.text(scoreValue);
+    $lives.text(livesLeft);
+    $clock.text(timerLength);
+  }
   /*
   ##########################
   ####Click Interactions####
@@ -195,17 +190,16 @@ $(()=>{
 
   function handleClick(buttonClicked,x,y,$squareClicked) {
     playerClick(buttonClicked, $squareClicked);
-    updateScore(x, y, $squareClicked);
+    changeScore(x, y, $squareClicked);
   }
 
   function playerClick(buttonClicked, squareClicked) {
     scoreValue = scoreValue + pointsSystem[buttonClicked][squareClicked.attr('class')];
-    $score.text(scoreValue);
+    updateScoreboard();
   }
 
-  function updateScore(x, y, squareClicked) {
-    console.log('score updated');
-    $score.text(scoreValue);
+  function changeScore(x, y, squareClicked) {
+    updateScoreboard();
     characterGrid[x][y].characterValue = 0;
     squareClicked.attr('class', 'blank');
   }
@@ -223,18 +217,29 @@ $(()=>{
 
   function playGame() {
     gameBoard();
+    timerLength = 0;
+    livesLeft = 5;
+    scoreValue = 0;
+    updateScoreboard();
     tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(startGame,levelDifficulty['levelOneSpeed']);
   }
 
   function startTimer() {
-    console.log('clock updated');
     timerLength++;
-    $clock.text(timerLength);
+    updateScoreboard();
     checkGameOver();
   }
 
+  function resetGame() {
+    emptyBoardColours(characterGrid);
+    reAssignColours(characterGrid);
+    gameBoard();
+    $sideBar.slideDown();
+    playGame();
+  }
+  
   /*
   ##########################
   ####Game Board States#####
@@ -311,11 +316,5 @@ $(()=>{
   $playButton.on('click', playGame);
 
   //Reset Button
-  $resetButton.on('click', function() {
-    emptyBoardColours(characterGrid);
-    reAssignColours(characterGrid);
-    gameBoard();
-    $sideBar.show();
-    playGame();
-  });
+  $resetButton.on('click', resetGame);
 });
