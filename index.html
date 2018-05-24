@@ -14,11 +14,16 @@
     <div class="game-wrapper">
       <div id="map"></div>
       <div class="side-bar">
-        <button id="play" class="button">Play button</button>
-        <input type="text">
-        <input type="submit">
+        <button id="play" class="button">Play</button>
+        <div class="input-wrap">
+          <p>
+            Enter your name
+          </p>
+          <input type="text">
+          <input type="submit">
+        </div>
         <ul class="instructions">
-          <li>Instructions:</li>
+          <li><h2>Instructions:</h2></li>
           <li class="title">Gain Points</li>
           <li>Left click Blue Square: 15points</li>
           <li>Right click Red Square: 15points</li>
@@ -32,30 +37,34 @@
         </ul>
       </div>
     </div>
-      <div class="score-board">
-        <div id="player-name"></div>
-        <div class="timer">
-          <ul>
-            <li>Timer:</li>
-            <li id="clock">0</li>
-          </ul>
-          </div>
-        <ul class="score-lives">
-          <li>Score: </li>
-          <li> <span class="score">0</span></li>
-          <li>Lives:</li>
-          <li><span class="lives">5</span></li>
+    <div id="level"></div>
+    <div class="score-board">
+      <div id="player-name"></div>
+      <div class="timer">
+        <ul id="clock">
+          <li>Timer:</li>
+          <li id="clock-face">0</li>
         </ul>
-        <button id="reset" class="button">Reset</button>
       </div>
+      <ul class="score-lives">
+        <li>Score: </li>
+        <li> <span class="score">0</span></li>
+      </ul>
+      <ul class="score-lives">
+        <li>Lives:</li>
+        <li><span class="lives">5</span></li>
+      </ul>
+    </div>
   </section>
   <section>
     <div class="high-score">
-    <ol id="high-score-name">
-    </ol>
-    <ol id="high-score-value">
-    </ol>
-  </div>
+      <button id="reset" class="button">Play again?</button>
+      <button id="new-player" class="button">New Player</button>
+      <ol id="high-score-name">
+      </ol>
+      <ol id="high-score-value">
+      </ol>
+    </div>
   </section>
 </body>
 </html>

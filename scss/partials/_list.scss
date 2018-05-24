@@ -1,0 +1,41 @@
+ul#clock {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: $alternate-colour;
+  border: 3px solid $border-colour;
+  border-radius: 60px;
+  font-size: 20px;
+  li#clock-face {
+    font-size: 100px;
+    color: $border-colour;
+  }
+}
+ul.instructions {
+  font-size: 20px;
+  color: $default-text-colour;
+  padding: 10px 5px;
+  flex: 2;
+  li { padding: 5px;}
+  li.title {
+    color: $background-colour;
+    font-size: 30px;
+  }
+}
+.high-score ol {
+  display: block;
+  font-size: 30px;
+  margin: 5px auto;
+  li {
+    padding: 3px;
+  }
+}
+ol#high-score-name {
+  text-align: left;
+}
+ol#high-score-value {
+  text-align: center;
+}

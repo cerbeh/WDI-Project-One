@@ -35,17 +35,17 @@ const pointsSystem = {
 
 const levelDifficulty = {
   //Interval timings for each level difficulty
-  levelOneSpeed: 2750,
-  levelTwoSpeed: 2500,
-  levelThreeSpeed: 2250,
-  levelFourSpeed: 2000,
-  levelFiveSpeed: 1700,
-  levelSixSpeed: 1500,
-  levelSevenSpeed: 1250,
-  levelEightSpeed: 1000,
+  'Level One': 2750,
+  'Level Two': 2500,
+  'Level Three': 2250,
+  'Level Four': 2000,
+  'Level Five': 1700,
+  'Level Six': 1500,
+  'Level Seven': 1250,
+  'Level Eight': 1000,
   //Passes scoreValue through this function to understand what level has been reached so that speed can be changed.
   score: function() {
-    if (scoreValue < 150) return 'levelOne';
+    if (scoreValue < 125) return 'levelOne';
     if (scoreValue >= 125 && scoreValue <250) return 'levelTwo';
     if (scoreValue >= 250 && scoreValue < 400) return 'levelThree';
     if (scoreValue >= 400 && scoreValue < 750) return 'levelFour';
@@ -106,15 +106,18 @@ $(()=>{
   const $map = $('#map');
   const $score = $('.score');
   const $lives = $('.lives');
-  const $clock = $('#clock');
+  const $clock = $('#clock-face');
   const $scoreBoard = $('.score-board');
   const $sideBar = $('.side-bar');
   const $submit = $('input:submit');
   const $input = $('input:text');
   const $playerName = $('#player-name');
+  const $newPlayer = $('#new-player');
   const $highScore = $('.high-score');
   const $highScoreName = $('#high-score-name');
   const $highScoreValue = $('#high-score-value');
+  const $level = $('#level');
+  const $submitSection = $('.input-wrap');
 
   function setup() {
     pregameBoard();
@@ -132,25 +135,27 @@ $(()=>{
   function checkGameDifficulty() {
     switch(levelDifficulty.score()) {
       case 'levelTwo':
-        increaseDifficulty('levelTwoSpeed');
+        increaseDifficulty('Level Two');
+        console.log('level two');
         break;
       case 'levelThree':
-        increaseDifficulty('levelThreeSpeed');
+        increaseDifficulty('Level Three');
+        console.log('level three');
         break;
       case 'levelFour':
-        increaseDifficulty('levelFourSpeed');
+        increaseDifficulty('Level Four');
         break;
       case 'levelFive':
-        increaseDifficulty('levelFiveSpeed');
+        increaseDifficulty('Level Five');
         break;
       case 'levelSix':
-        increaseDifficulty('levelSixSpeed');
+        increaseDifficulty('Level Six');
         break;
       case 'levelSeven':
-        increaseDifficulty('levelSevenSpeed');
+        increaseDifficulty('Level Seven');
         break;
       case 'levelEight':
-        increaseDifficulty('levelEightSpeed');
+        increaseDifficulty('Level Eight');
         break;
     }
   }
@@ -158,6 +163,7 @@ $(()=>{
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
     gameSpeedTiming = setInterval(startGame,levelDifficulty[levelReached]);
+    $level.text(`Reached ${levelReached}`);
   }
 
   /*
@@ -176,7 +182,7 @@ $(()=>{
   }
 
   function checkGameOver() {
-    if (timerLength === 90 || livesLeft <= 0) {
+    if (timerLength === 2 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       orderHighScores();
@@ -209,9 +215,7 @@ $(()=>{
   }
 
   function orderHighScores() {
-    //console.log(highScores);
-    //highScores.setItem(playerName, scoreValue);
-    //console.log(highScores);
+    highScores.setItem(playerName, scoreValue);
     const scoreOrder = Object.values(highScores).sort(function(a,b){
       return b - a;
     });
@@ -229,11 +233,8 @@ $(()=>{
     for (let i = 0; i < 5; i++) {
       const $name = $('<li />');
       const $score = $('<li />');
-      $name.text(`${i+1}: ${name[i]}`);
-      $name.appendTo($highScoreName);
-      $score.text(score[i]);
-      $score.appendTo($highScoreName);
-      //console.log(score, name, $name, $score, 'score array, name array, nameHTML, scoreHTML');
+      $name.text(`${i+1}: ${name[i]}`).appendTo($highScoreName);
+      $score.text(score[i]).appendTo($highScoreValue);
     }
     console.log($highScoreName);
   }
@@ -279,7 +280,9 @@ $(()=>{
     updateScoreboard();
     tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
-    gameSpeedTiming = setInterval(startGame,levelDifficulty['levelOneSpeed']);
+    gameSpeedTiming = setInterval(startGame,levelDifficulty['Level One']);
+    $level.text('Reached Level One');
+    $level.slideDown();
   }
 
   function startTimer() {
@@ -305,16 +308,17 @@ $(()=>{
 
   function pregameBoard() {
     $map.hide();
+    $newPlayer.hide();
     $scoreBoard.hide();
     $playButton.hide();
     $sideBar.css('width', '850px');
     $resetButton.hide();
+    $level.hide();
   }
 
   function gameBoard() {
     $playButton.hide();
     $scoreBoard.fadeIn();
-    //$sideBar.css('width', '500px');
     $sideBar.animate({'width': '500px'}, 500, function() {
       $map.slideDown();
     });
@@ -324,8 +328,9 @@ $(()=>{
     $map.slideUp();
     $sideBar.slideUp();
     $resetButton.show();
-    $playerName.hide();
+    $highScore.css({'height': '350px', 'width': '1075px'});
     $highScore.show();
+    $newPlayer.show();
   }
 
   function createBoard() {
@@ -360,8 +365,7 @@ $(()=>{
   $submit.on('click', function() {
     playerName = $input.val();
     $playerName.text(playerName);
-    $submit.hide();
-    $input.hide();
+    $submitSection.hide();
     $playButton.fadeIn();
     $highScore.hide();
   });

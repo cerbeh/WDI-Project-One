@@ -1,14 +1,21 @@
 button {
   background-color: $background-colour;
-  &#play, &#reset {
-    height: 200px;
-    width: 250px;
+  &#play, &#reset, &#new-player {
     border: 2px solid $border-colour;
     border-radius: 60px;
   }
   &#play {
-    margin: 0 97px;
+    height: 200px;
+    margin: 0 85px;
+    font-size: 55px;
+    flex: 1;
   }
+  &#reset, &#new-player {
+    margin: 20px 40px;
+    height: 50px;
+    width: 325px;
+  }
+
 }
 input {
   border: 2px solid $border-colour;
@@ -19,11 +26,13 @@ input {
     margin: 0 10px;
     text-align: center;
     font-size: 25px;
+    flex: 1;
   }
   &[type="submit"]{
     padding:20px;
     font-size: 25px;
     background-color: $background-colour;
     color: $default-text-colour;
+    flex: 1;
   }
 }
