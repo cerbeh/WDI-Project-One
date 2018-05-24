@@ -1,110 +1,23 @@
-button {
-  background-color: rgba(244, 212, 204, 0.86); }
-  button#play, button#reset {
-    height: 200px;
-    width: 250px;
-    border: 2px solid white;
-    border-radius: 60px; }
-  button#play {
-    margin: 0 97px; }
+/*
+Errno::ENOENT: No such file or directory @ rb_sysopen - scss/main.scss
 
-input {
-  border: 2px solid white;
-  border-radius: 60px; }
-  input[type="text"] {
-    height: 75px;
-    font-size: 20px;
-    margin: 0 10px;
-    text-align: center;
-    font-size: 25px; }
-  input[type="submit"] {
-    padding: 20px;
-    font-size: 25px;
-    background-color: rgba(244, 212, 204, 0.86);
-    color: rgba(119, 121, 227, 0.9); }
-
-* {
-  box-sizing: border-box; }
-  * body {
-    font-family: 'Oswald', sans-serif;
-    margin: 10px auto;
-    width: 80%;
-    background-color: rgba(119, 121, 227, 0.9); }
-  * .game-wrapper {
-    display: flex;
-    flex-wrap: wrap; }
-    * .game-wrapper #map {
-      width: 500px;
-      height: 500px;
-      margin: 0 auto; }
-      * .game-wrapper #map div {
-        border: 1px solid white;
-        width: 50px;
-        height: 50px;
-        float: left; }
-      * .game-wrapper #map div.blank {
-        background-color: rgba(244, 212, 204, 0.86); }
-      * .game-wrapper #map div.neutral {
-        background-color: chartreuse; }
-      * .game-wrapper #map div.kill {
-        background-color: red; }
-      * .game-wrapper #map div.save {
-        background-color: blue; }
-    * .game-wrapper .side-bar {
-      background-color: rgba(222, 222, 191, 0.75);
-      border: 3px solid white;
-      border-radius: 60px;
-      width: 500px;
-      margin: 0 auto;
-      height: 500px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-      * .game-wrapper .side-bar ul {
-        font-size: 20px;
-        color: rgba(119, 121, 227, 0.9);
-        padding: 10px 30px; }
-        * .game-wrapper .side-bar ul li {
-          padding: 10px; }
-          * .game-wrapper .side-bar ul li li.title {
-            color: rgba(222, 222, 191, 0.75);
-            font-size: 40px; }
-  * .score-board {
-    margin: 10px auto;
-    height: 250px;
-    width: 80%;
-    background-color: rgba(244, 212, 204, 0.86);
-    border: 3px solid white;
-    border-radius: 60px;
-    font-size: 30px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center; }
-    * .score-board .timer ul li {
-      text-align: center;
-      margin: 7px; }
-    * .score-board .timer ul li#clock {
-      display: flex;
-      width: 250px;
-      height: 200px;
-      justify-content: center;
-      align-items: center;
-      background-color: rgba(222, 222, 191, 0.75);
-      color: white;
-      border: 4px solid white;
-      border-radius: 60px;
-      font-size: 120px; }
-  * .score-lives {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid white;
-    border-radius: 60px;
-    height: 200px;
-    width: 250px;
-    margin: 10px;
-    font-size: 43px; }
-
-/*# sourceMappingURL=style.css.map */
+Backtrace:
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:454:in `read'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:454:in `update_stylesheet'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:209:in `each'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:294:in `watch'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/plugin.rb:109:in `method_missing'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/exec/sass_scss.rb:360:in `watch_or_update'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/exec/base.rb:52:in `parse'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/lib/sass/exec/base.rb:19:in `parse!'
+/Library/Ruby/Gems/2.3.0/gems/sass-3.5.6/bin/sass:13:in `<top (required)>'
+/usr/local/bin/sass:22:in `load'
+/usr/local/bin/sass:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Errno::ENOENT: No such file or directory @ rb_sysopen - scss/main.scss"; }

@@ -113,27 +113,15 @@ $(()=>{
   const $input = $('input:text');
   const $playerName = $('#player-name');
   const $highScore = $('.high-score');
-
-  //THESE ARE ALL GOING IN AN OBJECT TOMORROW!
-  const $firstPlaceName = $('#first-place-name');
-  const $secondPlaceName = $('#second-place-name');
-  const $thirdPlaceName = $('#third-place-name');
-  const $fourthPlaceName = $('#fourth-place-name');
-  const $fifthPlaceName = $('#fifth-place-name');
-  const $firstPlaceScore = $('#first-score');
-  const $secondPlaceScore = $('#second-score');
-  const $thirdPlaceScore = $('#third-score');
-  const $fourthPlaceScore = $('#fourth-score');
-  const $fifthPlaceScore = $('#fifth-score');
+  const $highScoreName = $('#high-score-name');
+  const $highScoreValue = $('#high-score-value');
 
   function setup() {
     pregameBoard();
     createBoard();
     defaultHighScores();
-    setHighScores();
+    orderHighScores();
   }
-
-  setup();
 
   /*
   ##########################
@@ -191,9 +179,9 @@ $(()=>{
     if (timerLength === 90 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
+      orderHighScores();
       endGameBoard();
       updateScoreboard();
-      addHighScore();
     }
 
   }
@@ -211,7 +199,8 @@ $(()=>{
   */
 
   function defaultHighScores() {
-    highScores.clear();
+    //This button can go somewhere on the highscore board?
+    //highScores.clear();
     highScores.setItem('Edward', 700);
     highScores.setItem('Flamie', 500);
     highScores.setItem('Zeus', 250);
@@ -219,33 +208,36 @@ $(()=>{
     highScores.setItem('electronic', 50);
   }
 
-  function setHighScores() {
-    const scores = Object.values(highScores).sort(function(a,b){
+  function orderHighScores() {
+    //console.log(highScores);
+    //highScores.setItem(playerName, scoreValue);
+    //console.log(highScores);
+    const scoreOrder = Object.values(highScores).sort(function(a,b){
       return b - a;
     });
-    $firstPlaceScore.text(scores[0]);
-    $secondPlaceScore.text(scores[1]);
-    $thirdPlaceScore.text(scores[2]);
-    $fourthPlaceScore.text(scores[3]);
-    $fifthPlaceScore.text(scores[4]);
-
-
-    const orderedScoreboard = Object.keys(highScores).sort(function(a,b){
+    //console.log(scoreOrder);
+    const nameOrder = Object.keys(highScores).sort(function(a,b){
       return highScores[b]-highScores[a];
     });
-    console.log(orderedScoreboard);
-    console.log(highScores);
-    $firstPlaceName.text(orderedScoreboard[0]);
-    $secondPlaceName.text(orderedScoreboard[1]);
-    $thirdPlaceName.text(orderedScoreboard[2]);
-    $fourthPlaceName.text(orderedScoreboard[3]);
-    $fifthPlaceName.text(orderedScoreboard[4]);
+    //console.log(nameOrder);
+    addHighScore(scoreOrder, nameOrder);
   }
 
-  function addHighScore() {
-    const highScoreNames = highScores.setItem(playerName, scoreValue);
-
+  function addHighScore(score, name) {
+    $highScoreName.empty();
+    $highScoreValue.empty();
+    for (let i = 0; i < 5; i++) {
+      const $name = $('<li />');
+      const $score = $('<li />');
+      $name.text(`${i+1}: ${name[i]}`);
+      $name.appendTo($highScoreName);
+      $score.text(score[i]);
+      $score.appendTo($highScoreName);
+      //console.log(score, name, $name, $score, 'score array, name array, nameHTML, scoreHTML');
+    }
+    console.log($highScoreName);
   }
+
   /*
   ##########################
   ####Click Interactions####
@@ -285,7 +277,6 @@ $(()=>{
     livesLeft = 5;
     scoreValue = 0;
     updateScoreboard();
-    $highScore.text(highScores);
     tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(startGame,levelDifficulty['levelOneSpeed']);
@@ -334,6 +325,7 @@ $(()=>{
     $sideBar.slideUp();
     $resetButton.show();
     $playerName.hide();
+    $highScore.show();
   }
 
   function createBoard() {
@@ -397,4 +389,6 @@ $(()=>{
 
   //Reset Button
   $resetButton.on('click', resetGame);
+
+  setup();
 });
