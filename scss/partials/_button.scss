@@ -11,11 +11,18 @@ button {
     flex: 1;
   }
   &#reset, &#new-player {
-    margin: 20px 40px;
-    height: 50px;
+    margin-top: 40px;
+    margin-bottom: 0;
+    height: 70px;
     width: 325px;
+    font-size: 30px;
   }
-
+  &#reset {
+    margin-left: 150px;
+  }
+  &#new-player {
+    margin-right: 150px;
+  }
 }
 input {
   border: 2px solid $border-colour;

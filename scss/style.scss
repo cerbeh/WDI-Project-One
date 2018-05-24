@@ -75,31 +75,6 @@
     justify-content: space-around;
     align-items: center;
   }
-  #player-name {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid $border-colour;
-    border-radius: 60px;
-    height: 200px;
-    width: 200px;
-    margin: 10px;
-    font-size: 43px;
-  }
-  .score-lives {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 3px solid $border-colour;
-    border-radius: 60px;
-    height: 200px;
-    width: 200px;
-    margin: 10px;
-    font-size: 43px;
-  }
   .high-score {
     width: 850px;
     height: 200px;
@@ -109,7 +84,7 @@
     align-items: flex-start;
     color: $default-text-colour;
     flex-wrap: wrap;
-    border: 2px solid $border-colour;
+    border: 3px solid $border-colour;
     border-radius: 60px;
     background-color: $background-colour;
   }

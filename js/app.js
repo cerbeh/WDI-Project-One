@@ -182,7 +182,8 @@ $(()=>{
   }
 
   function checkGameOver() {
-    if (timerLength === 2 || livesLeft <= 0) {
+    //During testing you will change timerLength. Default should be 90
+    if (timerLength === 90 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       orderHighScores();
