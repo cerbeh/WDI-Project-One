@@ -9,6 +9,7 @@ let clockIntervalTiming ;
 let gameSpeedTiming;
 let timerLength = 0;
 let playerName ;
+let levelMusic ;
 
 //Used to generate the initial objects that occupy the grid, ensuring they're all unique
 function generateObject() {
@@ -101,6 +102,7 @@ function populateFirstRow(array) {
 $(()=>{
 
   const highScores = window.localStorage;
+  const audio = document.querySelector('#sound');
   const $playButton = $('#play');
   const $playAgain = $('#reset');
   const $map = $('#map');
@@ -124,6 +126,7 @@ $(()=>{
     createBoard();
     defaultHighScores();
     orderHighScores();
+    audio.loop = true;
   }
 
   /*
@@ -139,18 +142,21 @@ $(()=>{
         break;
       case 'levelThree':
         increaseDifficulty('Level Three');
+        playAudio('level-three');
         break;
       case 'levelFour':
         increaseDifficulty('Level Four');
         break;
       case 'levelFive':
         increaseDifficulty('Level Five');
+        playAudio('level-five');
         break;
       case 'levelSix':
         increaseDifficulty('Level Six');
         break;
       case 'levelSeven':
         increaseDifficulty('Level Seven');
+        playAudio('level-seven');
         break;
       case 'levelEight':
         increaseDifficulty('Level Eight');
@@ -161,7 +167,7 @@ $(()=>{
   function increaseDifficulty(levelReached) {
     clearInterval(gameSpeedTiming);
     gameSpeedTiming = setInterval(startGame,levelDifficulty[levelReached]);
-    $level.text(`Reached ${levelReached}`);
+    $level.html(`<p>Reached ${levelReached}</p>`);
   }
 
   /*
@@ -180,8 +186,7 @@ $(()=>{
   }
 
   function checkGameOver() {
-    //During testing you will change timerLength. Default should be 90
-    if (timerLength === 2 || livesLeft <= 0) {
+    if (timerLength === 90 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       orderHighScores();
@@ -197,6 +202,14 @@ $(()=>{
     $clock.text(timerLength);
   }
 
+  function playAudio(level) {
+    if (levelMusic !== level) {
+      levelMusic = level;
+      audio.src = `./sounds/${level}.wav`;
+      audio.play();
+    }
+  }
+
   /*
   ##########################
   #######High Scores########
@@ -205,7 +218,7 @@ $(()=>{
 
   function defaultHighScores() {
     //This button can go somewhere on the highscore board?
-    //highScores.clear();
+    //  highScores.clear();
     highScores.setItem('Edward', 700);
     highScores.setItem('Flamie', 500);
     highScores.setItem('Zeus', 250);
@@ -264,6 +277,7 @@ $(()=>{
     $submitSection.hide();
     $playButton.fadeIn();
     $highScore.fadeOut();
+    playAudio('level-one');
   }
 
   /*
@@ -297,12 +311,26 @@ $(()=>{
   }
 
   function playAgain() {
+    playAudio('level-one');
     emptyBoardColours(characterGrid);
     reAssignColours(characterGrid);
     gameBoard();
     $sideBar.slideDown();
     $highScore.fadeOut();
     playGame();
+  }
+
+  function newPlayer() {
+    emptyBoardColours(characterGrid);
+    reAssignColours(characterGrid);
+    $newPlayer.hide();
+    $playAgain.hide();
+    $highScore.animate({'height': '200px', 'width': '850px'},1000);
+    $scoreBoard.fadeOut();
+    $level.fadeOut();
+    $sideBar.slideDown().animate({'width': '850px'},500, function(){
+      $submitSection.fadeIn();
+    });
   }
 
   /*
@@ -393,19 +421,7 @@ $(()=>{
   $playAgain.on('click', playAgain);
 
   //New Player
-  $newPlayer.on('click', function() {
-    emptyBoardColours(characterGrid);
-    reAssignColours(characterGrid);
-    $newPlayer.hide();
-    $playAgain.hide();
-    $highScore.animate({'height': '200px', 'width': '850px'},1000);
-    $scoreBoard.fadeOut();
-    $level.fadeOut();
-    $sideBar.slideDown();
-    $sideBar.animate({'width': '850px'},500, function(){
-      $submitSection.fadeIn();
-    });
-  });
+  $newPlayer.on('click', newPlayer);
 
   setup();
 });

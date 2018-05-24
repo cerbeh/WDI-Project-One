@@ -56,6 +56,11 @@ ul.instructions {
   padding: 10px 5px;
   flex: 2;
   li { padding: 5px;}
+  li h2 {
+    font-size: 75px;
+    margin-bottom: 10px;
+    color: $border-colour;
+  }
   li.title {
     color: $background-colour;
     font-size: 30px;
@@ -64,7 +69,7 @@ ul.instructions {
 .high-score ol {
   display: block;
   font-size: 30px;
-  margin: 5px auto;
+  margin: 5px 20px;
   li {
     padding: 3px;
   }

@@ -96,6 +96,10 @@ ul.instructions {
   flex: 2; }
   ul.instructions li {
     padding: 5px; }
+  ul.instructions li h2 {
+    font-size: 75px;
+    margin-bottom: 10px;
+    color: white; }
   ul.instructions li.title {
     color: rgba(244, 212, 204, 0.86);
     font-size: 30px; }
@@ -103,7 +107,7 @@ ul.instructions {
 .high-score ol {
   display: block;
   font-size: 30px;
-  margin: 5px auto; }
+  margin: 5px 20px; }
   .high-score ol li {
     padding: 3px; }
 
@@ -132,8 +136,8 @@ ol#high-score-value {
         border: 1px solid white;
         width: 50px;
         height: 50px;
-        border-radius: 20px;
-        margin: 2px;
+        border-radius: 5px;
+        margin: 1px;
         float: left; }
       * .game-wrapper #map div.blank {
         background-color: white; }
