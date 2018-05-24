@@ -28,7 +28,7 @@
         margin: 2px;
         float: left;
       }
-      div.blank { background-color: $background-colour; }
+      div.blank { background-color: $border-colour; }
       div.neutral { background-color: chartreuse; }
       div.kill { background-color: red; }
       div.save { background-color: blue; }
@@ -57,11 +57,18 @@
   #level {
     display: block;
     width: 1075px;
-    height: 75px;
+    height: 100px;
     margin: 5px auto;
-    background-color: $border-colour;
+    text-align: center;
+    justify-content: center;
     border-radius: 60px;
-    border: solid 2px black;
+    background-color: $background-colour;
+    border: solid 2px $border-colour;
+    p {
+      font-size: 43px;
+      color: $border-colour;
+      margin: 25px auto;
+    }
   }
   .score-board {
     margin: 10px auto;

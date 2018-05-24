@@ -1,23 +1,27 @@
-button {
-  background-color: rgba(244, 212, 204, 0.86); }
-  button#play, button#reset, button#new-player {
-    border: 2px solid white;
-    border-radius: 60px; }
-  button#play {
-    height: 200px;
-    margin: 0 85px;
-    font-size: 55px;
-    flex: 1; }
-  button#reset, button#new-player {
-    margin-top: 40px;
-    margin-bottom: 0;
-    height: 70px;
-    width: 325px;
-    font-size: 30px; }
-  button#reset {
-    margin-left: 150px; }
-  button#new-player {
-    margin-right: 150px; }
+button#play, button#reset, button#new-player {
+  background-color: rgba(244, 212, 204, 0.86);
+  border: 2px solid white;
+  border-radius: 60px;
+  color: rgba(119, 121, 227, 0.9);
+  font-family: 'Oswald', sans-serif; }
+button#play {
+  height: 200px;
+  margin: 0 85px;
+  font-size: 55px;
+  flex: 1; }
+button#reset, button#new-player {
+  background-color: rgba(222, 222, 191, 0.75);
+  border-color: white;
+  color: rgba(119, 121, 227, 0.9);
+  margin-top: 40px;
+  margin-bottom: 0;
+  height: 70px;
+  width: 325px;
+  font-size: 30px; }
+button#reset {
+  margin-left: 150px; }
+button#new-player {
+  margin-right: 150px; }
 
 input {
   border: 2px solid white;
@@ -132,7 +136,7 @@ ol#high-score-value {
         margin: 2px;
         float: left; }
       * .game-wrapper #map div.blank {
-        background-color: rgba(244, 212, 204, 0.86); }
+        background-color: white; }
       * .game-wrapper #map div.neutral {
         background-color: chartreuse; }
       * .game-wrapper #map div.kill {
@@ -158,11 +162,17 @@ ol#high-score-value {
   * #level {
     display: block;
     width: 1075px;
-    height: 75px;
+    height: 100px;
     margin: 5px auto;
-    background-color: white;
+    text-align: center;
+    justify-content: center;
     border-radius: 60px;
-    border: solid 2px black; }
+    background-color: rgba(244, 212, 204, 0.86);
+    border: solid 2px white; }
+    * #level p {
+      font-size: 43px;
+      color: white;
+      margin: 25px auto; }
   * .score-board {
     margin: 10px auto;
     height: 300px;

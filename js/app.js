@@ -102,7 +102,7 @@ $(()=>{
 
   const highScores = window.localStorage;
   const $playButton = $('#play');
-  const $resetButton = $('#reset');
+  const $playAgain = $('#reset');
   const $map = $('#map');
   const $score = $('.score');
   const $lives = $('.lives');
@@ -136,11 +136,9 @@ $(()=>{
     switch(levelDifficulty.score()) {
       case 'levelTwo':
         increaseDifficulty('Level Two');
-        console.log('level two');
         break;
       case 'levelThree':
         increaseDifficulty('Level Three');
-        console.log('level three');
         break;
       case 'levelFour':
         increaseDifficulty('Level Four');
@@ -183,7 +181,7 @@ $(()=>{
 
   function checkGameOver() {
     //During testing you will change timerLength. Default should be 90
-    if (timerLength === 90 || livesLeft <= 0) {
+    if (timerLength === 2 || livesLeft <= 0) {
       clearInterval(clockIntervalTiming);
       clearInterval(gameSpeedTiming);
       orderHighScores();
@@ -220,11 +218,9 @@ $(()=>{
     const scoreOrder = Object.values(highScores).sort(function(a,b){
       return b - a;
     });
-    //console.log(scoreOrder);
     const nameOrder = Object.keys(highScores).sort(function(a,b){
       return highScores[b]-highScores[a];
     });
-    //console.log(nameOrder);
     addHighScore(scoreOrder, nameOrder);
   }
 
@@ -237,7 +233,7 @@ $(()=>{
       $name.text(`${i+1}: ${name[i]}`).appendTo($highScoreName);
       $score.text(score[i]).appendTo($highScoreValue);
     }
-    console.log($highScoreName);
+
   }
 
   /*
@@ -262,6 +258,14 @@ $(()=>{
     squareClicked.attr('class', 'blank');
   }
 
+  function enterPlayerName() {
+    playerName = $input.val();
+    $playerName.text(playerName);
+    $submitSection.hide();
+    $playButton.fadeIn();
+    $highScore.fadeOut();
+  }
+
   /*
   ##########################
   #######Game Starter#######
@@ -282,7 +286,7 @@ $(()=>{
     tileMover(characterGrid);
     clockIntervalTiming = setInterval(startTimer,1000);
     gameSpeedTiming = setInterval(startGame,levelDifficulty['Level One']);
-    $level.text('Reached Level One');
+    $level.html('<p>Reached Level One</p>');
     $level.slideDown();
   }
 
@@ -292,12 +296,12 @@ $(()=>{
     checkGameOver();
   }
 
-  function resetGame() {
+  function playAgain() {
     emptyBoardColours(characterGrid);
     reAssignColours(characterGrid);
     gameBoard();
     $sideBar.slideDown();
-    $resetButton.fadeOut();
+    $highScore.fadeOut();
     playGame();
   }
 
@@ -313,7 +317,7 @@ $(()=>{
     $scoreBoard.hide();
     $playButton.hide();
     $sideBar.css('width', '850px');
-    $resetButton.hide();
+    $playAgain.hide();
     $level.hide();
   }
 
@@ -328,9 +332,9 @@ $(()=>{
   function endGameBoard() {
     $map.slideUp();
     $sideBar.slideUp();
-    $resetButton.show();
     $highScore.css({'height': '350px', 'width': '1075px'});
-    $highScore.show();
+    $highScore.fadeIn();
+    $playAgain.show();
     $newPlayer.show();
   }
 
@@ -363,14 +367,7 @@ $(()=>{
   ##########################
   */
   //Submit Button
-  $submit.on('click', function() {
-    playerName = $input.val();
-    $playerName.text(playerName);
-    $submitSection.hide();
-    $playButton.fadeIn();
-    $highScore.hide();
-  });
-
+  $submit.on('click', enterPlayerName);
 
   //Play Button
   $playButton.on('click', playGame);
@@ -393,7 +390,22 @@ $(()=>{
   });
 
   //Reset Button
-  $resetButton.on('click', resetGame);
+  $playAgain.on('click', playAgain);
+
+  //New Player
+  $newPlayer.on('click', function() {
+    emptyBoardColours(characterGrid);
+    reAssignColours(characterGrid);
+    $newPlayer.hide();
+    $playAgain.hide();
+    $highScore.animate({'height': '200px', 'width': '850px'},1000);
+    $scoreBoard.fadeOut();
+    $level.fadeOut();
+    $sideBar.slideDown();
+    $sideBar.animate({'width': '850px'},500, function(){
+      $submitSection.fadeIn();
+    });
+  });
 
   setup();
 });
