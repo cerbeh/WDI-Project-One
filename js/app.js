@@ -419,7 +419,7 @@ $(()=>{
 
   $('body').on('contextmenu', function(e) {
     e.preventDefault();
-  }
+  });
 
   //Reset Button
   $playAgain.on('click', playAgain);
