@@ -31,16 +31,26 @@ At the start, trying to make sure that I wasn't hard coding a lot of the early f
 In addition, at the start
 
 **What would you do differently?**
-If I had the chance to make this game again I would possibly
+If I had the chance to make this game again I would start making the basic game at first and then implement bonus features later once MVP had been reached. Initially I started with bonus tiles in mind and lost time trying to future proof my code with features I ended up not using.
 
 ---
 
 ### Planned Features
 
+###### Extra Tiles
 Initially there was a plan for extra tile types that would have bonus features.
 *Purple tiles to clear any red/blue tiles within a certain distance.
 Orange tiles that would require an m3 click at later levels of the game.
 Gold tiles to clear the bottom 5 rows of red/blue tiles.*
 
-I would have implemented a game win condition, but at point of completion no one had made it past level 7 in testing.
-Also if I had more time I would have created it to be mobile/tablet friendly, as during some play testing people mentioned that they could see themselves playing the game on their phone on their commute to work.
+###### Win condition
+I would have implemented a game win condition, but at point of completion no one had made it past level 7 in testing. This would have also included bonus points for completion time.
+
+###### Tile odds
+Currently there is simply a 1/4 chance of the tile type. Originally I did have the odds slightly different however with the progress of the game, and implementation of level up meaning that I would have to adjust these odds for a level up to increase/decrease the amount of certain tiles.
+
+###### Point and level animations
+Animations for scoring points, level up and high score.
+
+###### Mobile/Tablet responsiveness
+If I had more time I would have created it to be mobile/tablet friendly, as during some play testing people mentioned that they could see themselves playing the game on their phone on their commute to work.
