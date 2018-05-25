@@ -136,8 +136,8 @@ ol#high-score-value {
         border: 1px solid white;
         width: 50px;
         height: 50px;
-        border-radius: 5px;
-        margin: 1px;
+        border-radius: 20px;
+        margin: 2px;
         float: left; }
       * .game-wrapper #map div.blank {
         background-color: white; }

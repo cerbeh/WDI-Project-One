@@ -410,11 +410,11 @@ $(()=>{
 
   //Right Click
   $map.on('contextmenu', 'div', function(e) {
+    e.preventDefault();
     const x = $(this).data('x');
     const y = $(this).data('y');
     const $squareClicked = $(this);
     handleClick('rightClick',x,y,$squareClicked);
-    e.preventDefault();
   });
 
   //Reset Button
