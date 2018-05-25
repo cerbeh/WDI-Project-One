@@ -417,6 +417,10 @@ $(()=>{
     handleClick('rightClick',x,y,$squareClicked);
   });
 
+  $('body').on('contextmenu', e => {
+    e.preventDefault();
+  });
+
   //Reset Button
   $playAgain.on('click', playAgain);
 
