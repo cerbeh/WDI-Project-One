@@ -6,7 +6,9 @@
 
 Project one started with the brief to make a browser based game using HTML, CSS and Javascript (with the help of Jquery). Over the course of a week (Friday afternoon - Thursday evening), we had to build and style a game of our own creation. The idea behind the game was to have the tiles falling through the game grid and the user would interact with them depending on which colour it was.
 
-WEBSITE HERE.
+[Click here to play!](http://colour-clicker.herokuapp.com)
+
+[Visit the Github repon](http://github.com/cerbeh/wdi-project-one)
 
 ***
 
